@@ -1,0 +1,39 @@
+@font-face {
+  font-family: "iconfont"; /* Project id 3291112 */
+  src: url('iconfont.woff2?t=1648644479273') format('woff2'),
+       url('iconfont.woff?t=1648644479273') format('woff'),
+       url('iconfont.ttf?t=1648644479273') format('truetype');
+}
+
+.iconfont {
+  font-family: "iconfont" !important;
+  font-size: 16px;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-denglu:before {
+  content: "\e621";
+}
+
+.icon-denglu1:before {
+  content: "\e606";
+}
+
+.icon-Fill:before {
+  content: "\e600";
+}
+
+.icon-denglumima:before {
+  content: "\e634";
+}
+
+.icon-tuichudenglu:before {
+  content: "\e603";
+}
+
+.icon-logindenglu:before {
+  content: "\e6dd";
+}
+

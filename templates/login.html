@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block js %}
+    <script type="text/javascript">
+        window.onload = function () {
+            // https://blog.csdn.net/kongjiea/article/details/39644623
+            function GetRequest() {
+                const url = location.search; //获取url中"?"符后的字串
+                const theRequest = {};
+                if (url.indexOf("?") !== -1) {
+                    const str = url.substr(1);
+                    let strs = str.split("&");
+                    for (let i = 0; i < strs.length; i++) {
+                        theRequest[strs[i].split("=")[0]] = unescape(strs[i].split("=")[1]);
+                    }
+                }
+                return theRequest;
+            }
+            let retList = GetRequest()
+            if (retList.next !== undefined){
+                document.getElementById("postForm").action = "/login?next=" + retList.next
+             }else{
+                document.getElementById("postForm").action = "/login"
+            }
+
+        }
+    </script>
+{% endblock %}
+
+{% block style %}
+    <link rel="stylesheet" href="{% static "css/login/login.css" %}">
+    <link rel="stylesheet" href={% static "icon/font_3291112_6wb3t6ppuia/iconfont.css" %}>
+{% endblock %}
+
+{% block body %}
+
+    {#Login with a username and password#}
+
+    <div id="loginBox">
+        <form method="post" id="postForm">
+            <div id="textBox">User Login</div>
+            <div class="input-group">
+                <span class="iconfont icon-denglu"></span>
+                <label for="username">
+                    <input id="username"
+                           class="inputBox"
+                           name="username"
+                           type="text"
+                           placeholder="Username"
+                           autocomplete="off"
+                           autofocus="autofocus"
+                    />
+                </label>
+            </div>
+            <div class="input-group">
+                <span class="iconfont icon-denglumima"></span>
+                <span>
+                <label for="password">
+                    <input id="password" class="inputBox" name="password" type="password" placeholder="Password"
+                           autocomplete="off"/>
+                </label>
+            </span>
+            </div>
+            <input value="Login" type="submit" id="submitButton"/>
+        </form>
+    </div>
+
+{% endblock %}

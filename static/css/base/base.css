@@ -1,0 +1,84 @@
+body{
+    overflow: hidden;
+    background: url('/static/img/login/あおいとり_てるちゃん＿pid87331064.png') no-repeat top center;
+    background-size: cover;
+}
+
+
+ul{
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+}
+
+footer{
+    width: 100%;
+    position: fixed;
+    bottom: 0;
+}
+
+footer>ul{
+    height: 40px;
+    width: 100%;
+    overflow: hidden;
+    background-color: rgba(145, 234, 243, 0.8);
+
+}
+
+header{
+    top: 0;
+    width: 100%;
+    position: fixed;
+}
+
+header>ul {
+    height: 48px;
+    background-color: rgba(145, 234, 243, 0.8);
+}
+
+li {
+    float: left;
+}
+
+li a {
+    float: left;
+    display: block;
+    color: white;
+    text-align: center;
+    font-weight:bold;
+    text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.6);
+    padding: 14px 16px;
+    text-decoration: none;
+    transition: all 0.2s linear;
+    font-size:16px;
+}
+
+li a:hover {
+    transition: all 0.2s linear;
+    background-color: #6fabb0;
+    text-shadow: 2px 2px 0 rgba(0, 0, 0, 0.6);
+}
+
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    position:fixed;
+    top:0;
+    bottom:0;
+    left:0;
+    right:0;
+}
+
+/*img {*/
+/*    padding: 0;*/
+/*    display: block;*/
+/*    margin: 0 auto;*/
+/*    max-height: 45%;*/
+/*    max-width: 45%;*/
+/*}*/
+#topFix {
+    height: 48px;
+    width: 100%;
+}
+

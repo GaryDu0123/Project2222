@@ -1,0 +1,43 @@
+{% load static %}
+<head>
+<link rel="stylesheet" type="text/css" href={% static "css/base/base.css" %}>
+{#<script src="{% static "js/script_head.js" %}"></script>#}
+
+<title>Simple Student Templating Solutions</title>
+</head>
+
+{# 在这里面写CSS样式 #}
+{% block style %} {% endblock %}
+{# 在这里面写js脚本 #}
+{% block js %} {% endblock %}
+<header>
+    <ul>
+      <li><a class="active" href="/home">Home</a></li>
+      <li><a href="/login">Login</a></li>
+      <li><a href="/about">About</a></li>
+    </ul>
+</header>
+<div id="topFix"></div>
+
+{#<center><h2>Simple Student Templating Solutions</h2></center>#}
+{##}
+{##}
+{#<h3><i>Because the usability is more important than the back end for now.</i></h3>#}
+
+{#<p>#}
+{#<img src="{% static "img/header.jpg" %}" alt="Some stuff that popped out of tensor flow" height="80%">#}
+{#</p>#}
+
+{% block body %} {% endblock %}
+
+<footer>
+<ul>
+  <li>
+    <a>1</a>
+    <a>2</a>
+    <a>3</a>
+  </li>
+</ul>
+{#<script src="{% static "js/script_tail.js" %}"></script>#}
+
+</footer>
