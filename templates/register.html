@@ -2,9 +2,7 @@
 {% load static %}
 
 {% block js %}
-    <script type="text/javascript">
-
-    </script>
+    <script charset="utf-8" src="{% static "js/register/register.js" %}"></script>
 {% endblock %}
 
 {% block style %}
@@ -17,7 +15,7 @@
     {#Login with a username and password#}
 
     <div id="registerBox">
-        <form method="post" id="postForm">
+        <form id="postForm">
             <div id="textBox">User Register</div>
             <div class="input-group">
                 <span class="iconfont icon-denglu"></span>
@@ -35,23 +33,26 @@
             <div class="input-group">
                 <span class="iconfont icon-denglumima"></span>
                 <label for="password">
-                    <input id="password" class="inputBox" name="password" type="password" placeholder="Password"
+                    <input id="password"
+                           class="inputBox"
+                           name="password"
+                           type="password"
+                           placeholder="Password"
                            autocomplete="new-password"/>
                 </label>
             </div>
-            <div>Please input password again</div>
             <div class="input-group">
                 <span class="iconfont icon-denglumima"></span>
-                <label for="passwordCheck">
-                        <input id="passwordCheck"
+                <label for="passwordCheckBox">
+                        <input id="passwordCheckBox"
                                class="inputBox"
-                               name="password"
+                               name="passwordCheckBox"
                                type="password"
-                               placeholder=""
+                               placeholder="Input Password Again"
                                autocomplete="off"/>
                 </label>
             </div>
-            <input value="Login" type="submit" id="submitButton"/>
+            <input value="Register" type="button" id="submitButton"/>
         </form>
     </div>
 

@@ -6,6 +6,7 @@ from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponse, HttpResponseServerError, Http404, HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
 
 
 def index(request):
@@ -43,7 +44,9 @@ def login_page(request):
         if user is not None:
             login(request, user)
             if next_direct == "":
-                return render(request, "valid.html", {"name": user.username})
+                # todo 考虑一下要不要直接redirect
+                # return render(request, "valid.html", {"name": user.username})
+                return redirect("/chat/index")
             else:
                 return HttpResponseRedirect(next_direct)
         else:
@@ -52,7 +55,33 @@ def login_page(request):
 
 
 def register(request):
-    return render(request, "register.html")
+    if request.method == 'GET':
+        return render(request, "register.html")
+    elif request.method == 'POST':
+        # todo 不安全!!!!!! 警告
+        username = request.POST['username']
+        password = request.POST['password']
+        password_check_box = request.POST['passwordCheckBox']
+        if password != password_check_box:
+            # todo 添加警示错误
+            return render(request, "register.html")
+
+        try:
+            if User.objects.get(username=username) is not None:
+                return render(request, "register.html")
+        except Exception as e:
+            pass
+
+        try:
+            user = User.objects.create_user(username, email=None, password=password)
+        except Exception as e:
+            print(e)
+            # todo 添加警示错误
+            return render(request, "register.html")
+        login(request, user)
+        # todo 添加提示
+        return render(request, "valid.html", {"name": user.username})
+    raise Http404("Page does not exist")
 
 
 def error(request, exception):
@@ -71,5 +100,3 @@ def logout_button(request):
 @login_required
 def test(request):
     return render(request, "test.html")
-
-

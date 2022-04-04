@@ -14,6 +14,6 @@ class FriendRelationship(models.Model):
 # todo 写发送的时候记得在后端前端都做个最大限制
 class MessageRecord(models.Model):
     message_id = models.AutoField(primary_key=True)
-    sender = models.OneToOneField(to=User, on_delete=models.CASCADE, related_name="sender")
-    receiver = models.OneToOneField(to=User, on_delete=models.CASCADE, related_name="receiver")
+    sender = models.ForeignKey(to=User, on_delete=models.CASCADE, related_name="sender")
+    receiver = models.ForeignKey(to=User, on_delete=models.CASCADE, related_name="receiver")
     message = models.TextField()
