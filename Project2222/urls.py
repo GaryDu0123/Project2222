@@ -13,19 +13,23 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+from django.contrib.staticfiles.views import serve
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 from . import views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('about', views.about),
+    path('register', views.register),
     path('', views.index),
     path('home', views.index),
     path('login', views.login_page),
     path('robots.txt', views.robot),
+    path('favicon.ico', serve, {'path': 'icon/favicon.ico'}),
     path('test', views.test),
-    path('logout', views.logout_button)
+    path('logout', views.logout_button),
+    path('chat/', include('chat.urls'))
 ]
 
 handler404 = views.error

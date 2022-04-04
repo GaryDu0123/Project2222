@@ -1,0 +1,95 @@
+@import url("/static/css/font/font.css");
+
+form {
+    height: 100%;
+    width: 100%;
+    margin: 0 auto;
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+#registerBox {
+    display:flex;
+    flex-direction: column;
+    background-color: rgba(255, 255, 255, 0.58);
+    width: 500px;
+    height: 400px;
+    text-align:center;
+    margin:100px auto;
+    border-radius: 20px;
+    /*position:relative;*/
+}
+
+#textBox {
+    font-family: Handwritting, "Microsoft YaHei", cursive;
+    font-size: 30px;
+    margin-bottom: 10px;
+}
+
+.icon-denglu:before,
+.icon-denglumima:before{
+	font-size: 22px;
+    align-self: center;
+    padding: 0 5px;
+    /*font-weight:bold;*/
+}
+
+span.iconfont {
+    display:flex;
+}
+
+.input-group {
+    display:flex;
+    justify-content: center;
+    margin: 5px 0;
+}
+
+.inputBox {
+    height: 40px;
+    line-height: 30px;
+    border: 0;
+    border-bottom: 3px solid #a9a9a9;
+	/*padding: 10px 10px;*/
+    padding: 0 0 0 10px;
+    background-color: rgba(0, 0, 0, 0);
+	color: #000000;
+	transition: all 0.2s linear;
+	border-radius: 5px;
+    font-size: 14px;
+    font-family: JetBrainsMono, "Microsoft YaHei UI", cursive;
+}
+
+.inputBox::placeholder {
+    line-height: 30px;
+    font-size: 14px;
+}
+
+
+.inputBox:focus {
+    box-shadow: #15defd 0 0 30px;
+    transition: all 0.2s linear;
+    outline: none;
+}
+
+#submitButton {
+    align-self: center;
+    margin-top: 30px;	/* 按钮顶部与输入框的距离 */
+	width: 150px;
+	height: 40px;
+	color: white;	/* 按钮字体颜色 */
+	border: 0; /* 删除按钮边框 */
+	border-radius: 20px;	/* 按钮圆角边 */
+	background-image: linear-gradient(to right, #4facfe 0%, #00f2fe 100%);
+	font-family: Handwritting, "Microsoft YaHei", cursive;
+	font-size: 17px;
+    transition: all 0.2s linear;
+}
+#submitButton:active{
+	opacity: 0.5;
+	transition: all 0.2s linear;
+}
+#submitButton:hover {
+    box-shadow: #15defd 0 0 30px;
+    transition: all 0.2s linear;
+}

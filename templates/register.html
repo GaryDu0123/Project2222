@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% load static %}
+
+{% block js %}
+    <script type="text/javascript">
+
+    </script>
+{% endblock %}
+
+{% block style %}
+    <link rel="stylesheet" href="{% static "css/register/register.css" %}">
+    <link rel="stylesheet" href={% static "icon/font_3291112_6wb3t6ppuia/iconfont.css" %}>
+{% endblock %}
+
+{% block body %}
+
+    {#Login with a username and password#}
+
+    <div id="registerBox">
+        <form method="post" id="postForm">
+            <div id="textBox">User Register</div>
+            <div class="input-group">
+                <span class="iconfont icon-denglu"></span>
+                <label for="username">
+                    <input id="username"
+                           class="inputBox"
+                           name="username"
+                           type="text"
+                           placeholder="Username"
+                           autocomplete="off"
+                           autofocus="autofocus"
+                    />
+                </label>
+            </div>
+            <div class="input-group">
+                <span class="iconfont icon-denglumima"></span>
+                <label for="password">
+                    <input id="password" class="inputBox" name="password" type="password" placeholder="Password"
+                           autocomplete="new-password"/>
+                </label>
+            </div>
+            <div>Please input password again</div>
+            <div class="input-group">
+                <span class="iconfont icon-denglumima"></span>
+                <label for="passwordCheck">
+                        <input id="passwordCheck"
+                               class="inputBox"
+                               name="password"
+                               type="password"
+                               placeholder=""
+                               autocomplete="off"/>
+                </label>
+            </div>
+            <input value="Login" type="submit" id="submitButton"/>
+        </form>
+    </div>
+
+{% endblock %}

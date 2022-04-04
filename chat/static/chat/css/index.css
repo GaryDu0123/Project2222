@@ -1,0 +1,162 @@
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    position:fixed;
+    top:0;
+    bottom:0;
+    left:0;
+    right:0;
+}
+
+body{
+    overflow: hidden;
+    background: url('/static/chat/img/あおいとり_横になる_pid84860829.PNG') no-repeat top center;
+    background-size: cover;
+    display: flex;
+    display: -webkit-flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+/*定义整体的滚动条设置*/
+/* reference: https://www.cnblogs.com/wwqzbl/p/15391941.html*/
+/* scroll bar start*/
+*::-webkit-scrollbar {
+    background: transparent;
+    width: 6px;
+    height: 6px;
+}
+
+*::-webkit-scrollbar-thumb {
+    border-radius: 4px;
+    background: transparent;
+}
+
+*:hover::-webkit-scrollbar-thumb {
+  background: hsla(0, 0%, 53%, 0.4);
+}
+
+*:hover::-webkit-scrollbar-track {
+  background: hsla(0, 0%, 53%, 0.1);
+}
+/* scroll bar end*/
+
+/* 整体的布局配置 */
+/* tool bar display start */
+.toolbar {
+    flex-grow: 0;
+    width:100%;
+    height: 56px;
+    background-color: rgba(0, 242, 254, 0.3);
+}
+/* tool bar display end */
+
+
+/* content flex display start */
+.content {
+    width: 100%;
+    display: flex;
+    display: -webkit-flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.navBar {
+    flex-grow: 0;
+    height: calc(100vh - 92px);
+    width: 200px;
+    overflow-y: auto !important;
+}
+
+.chatBar{
+    width: calc(100% - 350px);
+    height: 100%;
+    display: -webkit-flex;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.inviteBar{
+    height: 100%;
+    width: 150px;
+    background-color: rgba(0, 254, 186, 0.68);
+}
+
+/* content end */
+
+
+/* */
+
+
+/* bottom display start */
+.bottomBar {
+    flex-grow: 0;
+    height: 36px;
+    width: 100%;
+    background-color: #8f17f1;
+}
+/* bottom display end */
+
+
+
+/* nav导航栏用来显示用户小格子的框体设置 */
+/* nav user box start */
+.userBox{
+    height: 50px;
+    width: 100%;
+    background-color: #91da85;
+    text-align: center;
+    align-self: safe center;
+}
+/* nav user box end */
+
+/* content format config start */
+.content{
+
+}
+/* content format config end */
+
+.chatBox{
+    flex-grow: 1;
+    width: 100%;
+    background-color: rgba(79, 172, 254, 0.29);
+}
+
+.writeBox{
+    flex-grow: 0;
+    width: 100%;
+    height: 180px;
+    background-color: rgba(104, 16, 128, 0.42);
+    display: -webkit-flex;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.sendWindow{
+    height: calc(100% - 30px);
+    width: calc(98% - 20px);
+    justify-content: center;
+    margin-top: 6px;
+    background-color: rgba(213, 213, 213, 0.37);
+    padding: 7px 10px;
+    word-break:break-all;
+    overflow: auto;
+}
+
+.sendButton {
+    width: 100%;
+    height: 30px;
+    margin: 4px 0;
+}
+
+.sendButton > #sendTextButton{
+    float: right;
+    height: 30px;
+    width: 70px;
+    border-radius: 7px;
+    margin-right: 10px;
+}

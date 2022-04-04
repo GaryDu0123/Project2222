@@ -51,6 +51,10 @@ def login_page(request):
     raise Http404("Page does not exist")
 
 
+def register(request):
+    return render(request, "register.html")
+
+
 def error(request, exception):
     return render(request, 'error.html', {"error_type": exception.response, "error_msg": exception.error_msg})
 
@@ -67,3 +71,5 @@ def logout_button(request):
 @login_required
 def test(request):
     return render(request, "test.html")
+
+
