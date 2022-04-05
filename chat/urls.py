@@ -10,3 +10,4 @@ urlpatterns = [
     path('debug/addfriend', views.debug_add_friend),
     path('debug/addmessagerecord', views.debug_add_message)
 ]
+

@@ -2,14 +2,14 @@ html, body {
     height: 100%;
     margin: 0;
     padding: 0;
-    position:fixed;
-    top:0;
-    bottom:0;
-    left:0;
-    right:0;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
 }
 
-body{
+body {
     overflow: hidden;
     background: url('/static/chat/img/あおいとり_横になる_pid84860829.PNG') no-repeat top center;
     background-size: cover;
@@ -34,22 +34,24 @@ body{
 }
 
 *:hover::-webkit-scrollbar-thumb {
-  background: hsla(0, 0%, 53%, 0.4);
+    background: hsla(0, 0%, 53%, 0.4);
 }
 
 *:hover::-webkit-scrollbar-track {
-  background: hsla(0, 0%, 53%, 0.1);
+    background: hsla(0, 0%, 53%, 0.1);
 }
+
 /* scroll bar end*/
 
 /* 整体的布局配置 */
 /* tool bar display start */
 .toolbar {
     flex-grow: 0;
-    width:100%;
+    width: 100%;
     height: 56px;
     background-color: rgba(0, 242, 254, 0.3);
 }
+
 /* tool bar display end */
 
 
@@ -69,16 +71,16 @@ body{
     overflow-y: auto !important;
 }
 
-.chatBar{
+.chatBar {
     width: calc(100% - 350px);
-    height: 100%;
+    height: calc(100vh - 92px);
     display: -webkit-flex;
     display: flex;
     flex-direction: column;
     justify-content: space-between;
 }
 
-.inviteBar{
+.inviteBar {
     height: 100%;
     width: 150px;
     background-color: rgba(0, 254, 186, 0.68);
@@ -97,35 +99,40 @@ body{
     width: 100%;
     background-color: #8f17f1;
 }
-/* bottom display end */
 
+/* bottom display end */
 
 
 /* nav导航栏用来显示用户小格子的框体设置 */
 /* nav user box start */
-.userBox{
+.userBox {
     height: 50px;
     width: 100%;
     background-color: #91da85;
     text-align: center;
     align-self: safe center;
 }
+
 /* nav user box end */
 
 /* content format config start */
-.content{
+.content {
 
 }
+
 /* content format config end */
 
-.chatBox{
-    flex-grow: 1;
+.chatBox {
+    display: flex;
+    display: -webkit-flex;
+    flex-direction: column;
+    height: calc(100% - 180px);
     width: 100%;
     background-color: rgba(79, 172, 254, 0.29);
+    overflow: auto;
 }
 
-.writeBox{
-    flex-grow: 0;
+.writeBox {
     width: 100%;
     height: 180px;
     background-color: rgba(104, 16, 128, 0.42);
@@ -136,14 +143,14 @@ body{
     justify-content: space-between;
 }
 
-.sendWindow{
+.sendWindow {
     height: calc(100% - 30px);
     width: calc(98% - 20px);
     justify-content: center;
     margin-top: 6px;
     background-color: rgba(213, 213, 213, 0.37);
     padding: 7px 10px;
-    word-break:break-all;
+    word-break: break-all;
     overflow: auto;
 }
 
@@ -153,10 +160,36 @@ body{
     margin: 4px 0;
 }
 
-.sendButton > #sendTextButton{
+.sendButton > #sendTextButton {
     float: right;
     height: 30px;
     width: 70px;
     border-radius: 7px;
     margin-right: 10px;
+}
+
+.bubble-left {
+    /*height: 40px;*/
+    display: inline-block;
+    margin: 10px 0 10px 10px;
+    float: left;
+    width: 500px;
+    min-height: 40px;
+}
+
+.bubble-right {
+    display: inline-block;
+    margin: 10px 10px 10px 0;
+    float: right;
+    width: 500px;
+    min-height: 40px;
+}
+
+.chatText {
+    padding-left: 10px;
+    height: 100%;
+    line-height: 40px;
+    background-color: rgba(255, 255, 255, 0.75);
+    border-radius: 10px;
+    white-space:normal;
 }
