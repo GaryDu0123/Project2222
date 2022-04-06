@@ -39,6 +39,7 @@
 
     <div id="loginBox">
         <form method="post" id="postForm">
+            {% csrf_token %}
             <div id="textBox">User Login</div>
             <div class="input-group">
                 <span class="iconfont icon-denglu"></span>

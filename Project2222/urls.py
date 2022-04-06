@@ -17,6 +17,7 @@ from django.contrib.staticfiles.views import serve
 from django.contrib import admin
 from django.urls import path, include
 from . import views
+from django.contrib.auth import views as auth_views
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -29,7 +30,9 @@ urlpatterns = [
     path('favicon.ico', serve, {'path': 'icon/favicon.ico'}),
     path('test', views.test),
     path('logout', views.logout_button),
-    path('chat/', include('chat.urls'))
+    path('chat/', include('chat.urls')),
+    path('api/', include('api.urls')),
+    path('change-password/', auth_views.PasswordChangeView.as_view()),
 ]
 
 handler404 = views.error
