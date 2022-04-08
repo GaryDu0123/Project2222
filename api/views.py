@@ -1,8 +1,10 @@
+from django.contrib.auth.models import User
+from django.db.models import Q
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from chat.models import FriendRelationship, MessageRecord
-
+import utils
 
 # Create your views here.
 def test(request):
@@ -17,7 +19,6 @@ def api_response(request):
     return HttpResponse("Hello World")
 
 
-"""
 def get_user_friend_box(request):
     if not request.user.is_authenticated:
         return JsonResponse({
@@ -26,24 +27,24 @@ def get_user_friend_box(request):
     user = request.user
     friend_list = {}
     count = 0
-    for friend in FriendRelationship.objects.filter(user1=user):
-        friend_list[count] = friend.user2.username
+    for friend in FriendRelationship.objects.filter(user_1=user):
+        friend_list[count] = friend.user_2.username
         count += 1
-    for friend in FriendRelationship.objects.filter(user2=user):
-        friend_list[count] = friend.user1.username
+    for friend in FriendRelationship.objects.filter(user_2=user):
+        friend_list[count] = friend.user_1.username
         count += 1
     return JsonResponse(friend_list)
-"""
 
 
-def get_user_friend_box(request):
-    return JsonResponse({
-        "0": "test0",
-        "1": "test1",
-        "2": "test2",
-        "3": "test3",
-        "4": "test5",
-    })
+# def get_user_friend_box(request):
+#     return JsonResponse({
+#         "0": "test0",
+#         "1": "test1",
+#         "2": "test2",
+#         "3": "test3",
+#         "4": "test4",
+#         "5": "test5",
+#     })
 
 
 def get_message(request):
@@ -69,3 +70,27 @@ def get_message(request):
             "from": "sender"
         },
     })
+
+
+def initialize_chat_box(request):
+    if not request.user.is_authenticated:
+        return JsonResponse({
+            "warning": "login required"
+    })
+    user1 = request.user
+    user2 = User.objects.get(username=request.POST["receiver"])
+    if not utils.is_friend(user1, user2):
+        return HttpResponse(status=403)
+
+    query_result = MessageRecord.objects.filter(
+        Q(sender=user1, receiver=user2) | Q(sender=user2, receiver=user1)
+    ).order_by('message_id')
+    ret_dic = {}
+    counter = 0
+    for result in query_result:
+        ret_dic[str(counter)] = {
+            "content": result.message,
+            "from": "sender" if result.sender == user1 else "receiver"
+        }
+        counter += 1
+    return JsonResponse(ret_dic)

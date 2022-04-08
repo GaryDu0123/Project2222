@@ -8,6 +8,7 @@ from . import views
 urlpatterns = [
     path('index', views.index),
     path('debug/addfriend', views.debug_add_friend),
-    path('debug/addmessagerecord', views.debug_add_message)
+    path('debug/addmessagerecord', views.debug_add_message),
+    path('debug/messageReceive', views.message_receive)
 ]
 

@@ -13,19 +13,14 @@
 </div>
 
 <div class="content">
-    <div class="navBar">
-    </div>
+    <div class="navBar"></div>
     <div class="chatBar">
-        <div class="chatBox">
-
-
-        </div>
+        <div class="chatBox"></div>
         <div class="writeBox">
             <div class="sendWindow" contenteditable="true"></div>
             <div class="sendButton">
-                <button id="sendTextButton" type="submit">Send</button>
+                <button id="sendTextButton" type="button">Send</button>
             </div>
-
         </div>
     </div>
     <div class="inviteBar">
@@ -40,4 +35,6 @@
 </body>
 </html>
 <script src="https://unpkg.com/axios@0.20.0/dist/axios.min.js"></script>
+<script type="module" src="{% static "chat/js/login/basic.js" %}"></script>
 <script type="module" src="{% static "chat/js/login/schedule.js" %}"></script>
+<script type="module" src="{% static "chat/js/login/sendMessage.js" %}"></script>
