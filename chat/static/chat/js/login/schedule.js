@@ -2,6 +2,7 @@ export const manager = Object()
 manager.currentSession = null;
 manager.timestamp = null;
 manager.userBoxResponse = null;
+manager.currentTimerId = null;
 
 
 axios.interceptors.request.use((config) => {
@@ -23,6 +24,8 @@ function changeSessionListener() {
     manager.currentSession = nodes.indexOf(this)
     // 重新获取用户的信息
     initializeChatBox()
+    clearInterval(manager.currentTimerId)
+    manager.currentTimerId = setPolling()
 }
 
 
@@ -58,19 +61,16 @@ async function createUserBox() {
     }
 }
 
-// todo 需要测试data更改的问题
-function initializeChatBox() {
+function requestMessageDataAndUpdate(urls, param) {
     const navBar = document.querySelector(".chatBox");
-    if (manager.userBoxResponse === null) {
-        return
-    }
-    let param = new URLSearchParams()
-    param.append("receiver", manager.userBoxResponse[manager.currentSession]);
-
-    axios.post('/api/initChatData', param)
+    axios.post(urls, param)
         .then(function (response) {
+            console.log(response)
             if (response.data === undefined || response.data === null) {
                 return;
+            }
+            if (response.data.length !== 0){
+                manager.timestamp = new Date().getTime().toString();
             }
             for (let record in response.data) {
                 if (response.data[record].content === undefined || response.data[record].from === undefined) {
@@ -93,13 +93,23 @@ function initializeChatBox() {
                 let outerDiv = document.createElement("div");
                 outerDiv.appendChild(middleDiv);
                 navBar.appendChild(outerDiv);
+                navBar.scrollTop = navBar.scrollHeight;
             }
             // 设置此次更新的时间戳, 供定时任务使用
-            manager.timestamp = new Date().getTime().toString();
         })
         .catch(function (error) {
             console.log(error);
         });
+}
+
+// todo 需要测试data更改的问题
+function initializeChatBox() {
+    if (manager.userBoxResponse === null) {
+        return
+    }
+    let param = new URLSearchParams()
+    param.append("receiver", manager.userBoxResponse[manager.currentSession]);
+    requestMessageDataAndUpdate('/api/initChatData', param);
 }
 
 async function main() {
@@ -107,3 +117,22 @@ async function main() {
 }
 
 main().then()
+
+
+function updateMessageBox() {
+    console.log({
+        "receiver": manager.userBoxResponse[manager.currentSession],
+        "timestamp": manager.timestamp
+    })
+    let param = new URLSearchParams()
+    param.append("receiver", manager.userBoxResponse[manager.currentSession]);
+    param.append("timestamp", manager.timestamp);
+    requestMessageDataAndUpdate('/api/polling_message', param)
+}
+
+function setPolling() {
+    return setInterval(function () {
+        setTimeout(updateMessageBox, 0)
+    }, 3000);
+}
+

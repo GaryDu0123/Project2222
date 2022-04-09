@@ -1,3 +1,5 @@
+from datetime import datetime
+
 from django.contrib.auth.models import User
 from django.db.models import Q
 from django.http import HttpResponse, JsonResponse
@@ -5,6 +7,7 @@ from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from chat.models import FriendRelationship, MessageRecord
 import utils
+
 
 # Create your views here.
 def test(request):
@@ -36,17 +39,6 @@ def get_user_friend_box(request):
     return JsonResponse(friend_list)
 
 
-# def get_user_friend_box(request):
-#     return JsonResponse({
-#         "0": "test0",
-#         "1": "test1",
-#         "2": "test2",
-#         "3": "test3",
-#         "4": "test4",
-#         "5": "test5",
-#     })
-
-
 def get_message(request):
     return JsonResponse({
         "0": {
@@ -76,7 +68,7 @@ def initialize_chat_box(request):
     if not request.user.is_authenticated:
         return JsonResponse({
             "warning": "login required"
-    })
+        })
     user1 = request.user
     user2 = User.objects.get(username=request.POST["receiver"])
     if not utils.is_friend(user1, user2):
@@ -94,3 +86,34 @@ def initialize_chat_box(request):
         }
         counter += 1
     return JsonResponse(ret_dic)
+
+
+def polling_update_message(request):
+    if not request.user.is_authenticated:
+        return JsonResponse({
+            "warning": "login required"
+        })
+    user1 = request.user
+    user2 = User.objects.get(username=request.POST["receiver"])
+    if not utils.is_friend(user1, user2):
+        return HttpResponse(status=403)
+    try:
+        user_timestamp = int(request.POST["timestamp"])
+        date = datetime.fromtimestamp(user_timestamp / 1000)
+
+        query_result = MessageRecord.objects.filter(
+            sender=user2, receiver=user1
+        ).filter(timestamp__gte=date).order_by('message_id')
+        ret_dic = {}
+        counter = 0
+        for result in query_result:
+            ret_dic[str(counter)] = {
+                "content": result.message,
+                "from": "sender" if result.sender == user1 else "receiver"
+            }
+        counter += 1
+        print(ret_dic, user_timestamp)
+        return JsonResponse(ret_dic)
+    except Exception as e:
+        print(e)
+        return HttpResponse(status=403)

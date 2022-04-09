@@ -1,4 +1,5 @@
 import {manager} from "./schedule.js";
+
 const writeBox = document.querySelector(".sendWindow")
 
 function sendCheck(writeBox) {
@@ -28,7 +29,18 @@ async function seedMessage(writeBox) {
     }
     console.log(document.cookie)
     if (await axiosRequest(writeBox.innerText)) {
+        const navBar = document.querySelector(".chatBox");
+        let innerDiv = document.createElement("div");
+        innerDiv.className = "chatText";
+        innerDiv.innerText = writeBox.innerText;
+        let middleDiv = document.createElement("div");
+        middleDiv.appendChild(innerDiv);
+        middleDiv.className = "bubble-right"
+        let outerDiv = document.createElement("div");
+        outerDiv.appendChild(middleDiv);
+        navBar.appendChild(outerDiv);
         writeBox.innerText = ""
+        navBar.scrollTop = navBar.scrollHeight;
     } else {
         console.log("Send failed")
     }

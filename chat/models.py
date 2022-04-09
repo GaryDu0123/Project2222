@@ -16,5 +16,5 @@ class MessageRecord(models.Model):
     message_id = models.AutoField(primary_key=True)
     sender = models.ForeignKey(to=User, on_delete=models.CASCADE, related_name="sender")
     receiver = models.ForeignKey(to=User, on_delete=models.CASCADE, related_name="receiver")
-    timestamp = models.TextField()
+    timestamp = models.DateTimeField()
     message = models.TextField()
