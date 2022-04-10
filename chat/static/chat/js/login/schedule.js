@@ -20,8 +20,15 @@ function changeSessionListener() {
     // 清除当前的盒子以供更新
     const chatBox = document.querySelector(".chatBox");
     chatBox.innerHTML = ""
+
+    if (manager.currentSession !== null){
+        nodes[manager.currentSession].classList.remove('useBoxOnSelect')
+    }
+
     // 改变当前的会话index
     manager.currentSession = nodes.indexOf(this)
+    this.classList.add('useBoxOnSelect')
+
     // 重新获取用户的信息
     initializeChatBox()
     clearInterval(manager.currentTimerId)

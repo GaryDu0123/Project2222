@@ -31,7 +31,7 @@ def debug_add_message(request):
 
 
 def message_receive(request):
-    print(request.POST)
+    # print(request.POST)
     if not request.user.is_authenticated:
         return JsonResponse({
             "warning": "login required"
@@ -43,11 +43,13 @@ def message_receive(request):
             raise Exception
         timestamp = int(request.POST["timestamp"])
         date = datetime.fromtimestamp(timestamp / 1000)
-        MessageRecord.objects.create(sender=user1,
-                                     receiver=user2,
-                                     message=request.POST["content"],
-                                     timestamp=date)
-    except Exception:
+        record = MessageRecord.objects.create(sender=user1,
+                                              receiver=user2,
+                                              message=request.POST["content"],
+                                              timestamp=date)
+        record.save()
+    except Exception as e:
+        print(e)
         return HttpResponse(status=403)
 
     return HttpResponse(status=200)

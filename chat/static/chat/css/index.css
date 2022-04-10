@@ -1,3 +1,5 @@
+@import url("/static/css/font/font.css");
+
 html, body {
     height: 100%;
     margin: 0;
@@ -46,10 +48,48 @@ body {
 /* 整体的布局配置 */
 /* tool bar display start */
 .toolbar {
-    flex-grow: 0;
+    display: flex;
+    display: -webkit-flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: row;
     width: 100%;
     height: 56px;
     background-color: rgba(0, 242, 254, 0.3);
+}
+
+.toolBox{
+    height: 56px;
+    width: 56px;
+}
+
+#fill{
+    flex-grow: 1;
+}
+
+#fill>div{
+    margin-left: 30px;
+    color: white;
+    font-weight:bold;
+    text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.6);
+    font-size: 20px;
+}
+
+#logoutIcon{
+    width: 56px;
+    height: 56px;
+    display: flex;
+    display: -webkit-flex;
+    align-items: center;
+    justify-content: center;
+    color: #266165;
+    font-size: 25px;
+}
+
+#logout:hover{
+    transition: all 0.2s linear;
+    background-color: #6fabb0;
+    color: #000000;
 }
 
 /* tool bar display end */
@@ -65,6 +105,9 @@ body {
 }
 
 .navBar {
+    font-family: "Microsoft YaHei UI", JetBrainsMono, cursive;
+    border: 0 solid #e0e0e0;;
+    border-right-width: 1px;
     flex-grow: 0;
     height: calc(100vh - 92px);
     width: 200px;
@@ -81,9 +124,11 @@ body {
 }
 
 .inviteBar {
+    border: 0 solid #e0e0e0;;
+    border-left-width: 1px;
     height: 100%;
     width: 150px;
-    background-color: rgba(0, 254, 186, 0.68);
+    background-color: rgba(250, 250, 250, 0.58);
 }
 
 /* content end */
@@ -97,7 +142,7 @@ body {
     flex-grow: 0;
     height: 36px;
     width: 100%;
-    background-color: #8f17f1;
+    background-color: rgba(0, 242, 254, 0.3);
 }
 
 /* bottom display end */
@@ -107,12 +152,24 @@ body {
 /* nav user box start */
 .userBox {
     height: 50px;
+    line-height: 50px;
     width: 100%;
-    background-color: #91da85;
+    background-color: rgba(230, 230, 230, 0.3);
     text-align: center;
     align-self: safe center;
+    border-radius: 5px;
 }
 
+.userBox:hover {
+    background-color: rgba(231, 231, 231, 0.84);
+    transition: all 0.2s linear;
+}
+
+
+.useBoxOnSelect{
+    background-color: rgba(198, 198, 198, 0.4);
+    transition: all 0.1s linear;
+}
 /* nav user box end */
 
 /* content format config start */
@@ -128,14 +185,14 @@ body {
     flex-direction: column;
     height: calc(100% - 180px);
     width: 100%;
-    background-color: rgba(79, 172, 254, 0.29);
+    background-color: rgba(255, 255, 255, 0.37);
     overflow: auto;
 }
 
 .writeBox {
     width: 100%;
     height: 180px;
-    background-color: rgba(104, 16, 128, 0.42);
+    background-color: rgba(135, 206, 235, 0.5);
     display: -webkit-flex;
     display: flex;
     flex-direction: column;
@@ -148,10 +205,15 @@ body {
     width: calc(98% - 20px);
     justify-content: center;
     margin-top: 6px;
-    background-color: rgba(213, 213, 213, 0.37);
+    background-color: rgba(226, 226, 227, 0.68);
     padding: 7px 10px;
     word-break: break-all;
     overflow: auto;
+    border-radius: 4px;
+}
+
+.sendWindow:focus {
+    outline: none;
 }
 
 .sendButton {
@@ -166,6 +228,20 @@ body {
     width: 70px;
     border-radius: 7px;
     margin-right: 10px;
+    border: 0; /* 删除按钮边框 */
+	font-family: "Microsoft YaHei", cursive;
+	font-size: 14px;
+    transition: all 0.2s linear;
+}
+
+.sendButton > #sendTextButton:hover {
+    background-color: rgba(231, 231, 231, 0.84);
+    transition: all 0.2s linear;
+}
+
+.sendButton > #sendTextButton:active {
+    background-color: rgba(157, 213, 151, 0.84);
+    transition: all 0.2s linear;
 }
 
 .bubble-left {
@@ -193,3 +269,4 @@ body {
     border-radius: 10px;
     white-space:normal;
 }
+

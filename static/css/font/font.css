@@ -6,3 +6,8 @@
 	font-family: JetBrainsMono;
 	src: url("/static/font/JetBrainsMono[wght].ttf");
 }
+
+@font-face {
+	font-family: msyh;
+	src: url("/static/font/msyh.ttc");
+}
