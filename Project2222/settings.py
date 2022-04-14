@@ -35,6 +35,9 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'werkzeug_debugger_runserver',  # 开启https需要的服务
+    'django_extensions',  # 开启https需要的服务
+    "sslserver",
     'chat',
     'api'
 ]

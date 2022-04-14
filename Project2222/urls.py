@@ -18,6 +18,7 @@ from django.contrib import admin
 from django.urls import path, include
 from . import views
 from django.contrib.auth import views as auth_views
+from django.views.generic.base import RedirectView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -27,12 +28,12 @@ urlpatterns = [
     path('home', views.index),
     path('login', views.login_page),
     path('robots.txt', views.robot),
-    path('favicon.ico', serve, {'path': 'icon/favicon.ico'}),
+    path("favicon.ico", RedirectView.as_view(url='static/icon/favicon.ico')),
     path('test', views.test),
     path('logout', views.logout_button),
     path('chat/', include('chat.urls')),
     path('api/', include('api.urls')),
-    path('change-password/', auth_views.PasswordChangeView.as_view()),
+    path('change-password/', auth_views.PasswordChangeView.as_view())
 ]
 
 handler404 = views.error
