@@ -1,12 +1,13 @@
 #!/usr/bin/env python
 # -*-coding:utf-8 -*-
 import random
-
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponse, HttpResponseServerError, Http404, HttpResponseRedirect
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
+from encryption.key import RSA_manager
+import json
 
 
 def index(request):
@@ -34,23 +35,24 @@ def about(request):
 
 
 def login_page(request):
-    next_direct = request.GET.get('next', '')
     if request.method == 'GET':
         return render(request, "login.html")
     elif request.method == 'POST':
-        username = request.POST['username']
-        password = request.POST['password']
-        user = authenticate(username=username, password=password)
-        if user is not None:
-            login(request, user)
-            if next_direct == "":
+        try:
+            data = RSA_manager.decrypt(request.POST['key'])
+            request_data = json.loads(data)
+            username = request_data['username']
+            password = request_data['password']
+            user = authenticate(username=username, password=password)
+            if user is not None:
+                login(request, user)
                 # todo 考虑一下要不要直接redirect
-                # return render(request, "valid.html", {"name": user.username})
-                return redirect("/chat/index")
+                return HttpResponse(status=200)
             else:
-                return HttpResponseRedirect(next_direct)
-        else:
-            return render(request, "invalid.html")
+                return HttpResponse(status=401)
+        except Exception as e:
+            print(e)
+            return HttpResponse(status=403)
     raise Http404("Page does not exist")
 
 
@@ -59,28 +61,23 @@ def register(request):
         return render(request, "register.html")
     elif request.method == 'POST':
         # todo 不安全!!!!!! 警告
-        username = request.POST['username']
-        password = request.POST['password']
-        password_check_box = request.POST['passwordCheckBox']
-        if password != password_check_box:
-            # todo 添加警示错误
-            return render(request, "register.html")
-
         try:
-            if User.objects.get(username=username) is not None:
-                return render(request, "register.html")
-        except Exception as e:
-            pass
-
-        try:
+            data = RSA_manager.decrypt(request.POST['key'])
+            request_data = json.loads(data)
+            username = request_data['username']
+            password = request_data['password']
+            password_check_box = request_data['passwordCheckBox']
+            if password != password_check_box:
+                # todo 添加警示错误
+                raise Exception
             user = User.objects.create_user(username, email=None, password=password)
         except Exception as e:
             print(e)
             # todo 添加警示错误
-            return render(request, "register.html")
+            return HttpResponse(status=403)
         login(request, user)
         # todo 添加提示
-        return render(request, "valid.html", {"name": user.username})
+        return HttpResponse(status=200)
     raise Http404("Page does not exist")
 
 

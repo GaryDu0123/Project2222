@@ -39,7 +39,8 @@ INSTALLED_APPS = [
     'django_extensions',  # 开启https需要的服务
     "sslserver",
     'chat',
-    'api'
+    'api',
+    'encryption'
 ]
 
 MIDDLEWARE = [
@@ -130,3 +131,4 @@ STATICFILES_DIRS = (
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 LOGIN_URL = "/login"
+

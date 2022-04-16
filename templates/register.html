@@ -1,7 +1,10 @@
 {% extends "base.html" %}
 {% load static %}
+{% load public_key %}
 
 {% block js %}
+    <script src="https://unpkg.com/axios@0.20.0/dist/axios.min.js"></script>
+    <script src="https://cdn.bootcss.com/jsencrypt/3.0.0-beta.1/jsencrypt.js"></script>
     <script charset="utf-8" src="{% static "js/register/register.js" %}"></script>
 {% endblock %}
 
@@ -17,6 +20,7 @@
     <div id="registerBox">
         <form id="postForm">
             {% csrf_token %}
+            {% public_key %}
             <div id="textBox">User Register</div>
             <div class="input-group">
                 <span class="iconfont icon-denglu"></span>

@@ -1,0 +1,1 @@
+python manage.py runsslserver 127.0.0.1:8000 --certificate ./certs/myCA.pem --key ./certs/server_nopwd.key

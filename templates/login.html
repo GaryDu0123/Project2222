@@ -1,31 +1,11 @@
 {% extends "base.html" %}
 {% load static %}
+{% load public_key %}
 
 {% block js %}
-    <script type="text/javascript">
-        window.onload = function () {
-            // https://blog.csdn.net/kongjiea/article/details/39644623
-            function GetRequest() {
-                const url = location.search; //获取url中"?"符后的字串
-                const theRequest = {};
-                if (url.indexOf("?") !== -1) {
-                    const str = url.substr(1);
-                    let strs = str.split("&");
-                    for (let i = 0; i < strs.length; i++) {
-                        theRequest[strs[i].split("=")[0]] = unescape(strs[i].split("=")[1]);
-                    }
-                }
-                return theRequest;
-            }
-            let retList = GetRequest()
-            if (retList.next !== undefined){
-                document.getElementById("postForm").action = "/login?next=" + retList.next
-             }else{
-                document.getElementById("postForm").action = "/login"
-            }
-
-        }
-    </script>
+    <script src="https://unpkg.com/axios@0.20.0/dist/axios.min.js"></script>
+    <script src="https://cdn.bootcss.com/jsencrypt/3.0.0-beta.1/jsencrypt.js"></script>
+    <script charset="utf-8" src="{% static "js/login/login.js" %}"></script>
 {% endblock %}
 
 {% block style %}
@@ -40,6 +20,7 @@
     <div id="loginBox">
         <form method="post" id="postForm">
             {% csrf_token %}
+            {% public_key %}
             <div id="textBox">User Login</div>
             <div class="input-group">
                 <span class="iconfont icon-denglu"></span>
@@ -63,8 +44,7 @@
                 </label>
             </span>
             </div>
-            <input value="Login" type="submit" id="submitButton"/>
+            <input value="Login" type="button" id="submitButton"/>
         </form>
     </div>
-
 {% endblock %}

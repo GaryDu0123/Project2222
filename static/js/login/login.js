@@ -12,15 +12,6 @@ window.onload = function(){
     };
 }
 
-
-// 判断输入值和二次输入值是否相同
-function inputBoxCheck(){
-    const passwordCheckBox = document.querySelector("#passwordCheckBox");
-    const password = document.querySelector("#password");
-    return passwordCheckBox.value === password.value;
-}
-
-// 判断用户名是否不为空
 function usernameCheck(){
     const username = document.querySelector("#username");
     const usernameValue = username.value;
@@ -28,17 +19,33 @@ function usernameCheck(){
 
 }
 
-function checkAll(){
-    return inputBoxCheck() && usernameCheck()
+function getNext() {
+    // https://blog.csdn.net/kongjiea/article/details/39644623
+    function GetRequest() {
+        const url = location.search; //获取url中"?"符后的字串
+        const theRequest = {};
+        if (url.indexOf("?") !== -1) {
+            const str = url.substr(1);
+            let strs = str.split("&");
+            for (let i = 0; i < strs.length; i++) {
+                theRequest[strs[i].split("=")[0]] = unescape(strs[i].split("=")[1]);
+            }
+        }
+        return theRequest;
+    }
+    let retList = GetRequest()
+    if (retList.next !== undefined){
+        return retList.next
+     }else{
+        return null;
+    }
 }
-
 
 function initSubmitButton(){
     const username = document.querySelector('#username')
     const password = document.querySelector("#password")
-    const passwordCheckBox = document.querySelector('#passwordCheckBox')
     const publicKey = document.querySelector('#public_key')
-    if (!checkAll()){
+    if (!usernameCheck()){
         return
     }
     if (publicKey === null){
@@ -52,24 +59,27 @@ function initSubmitButton(){
     let profile_info = {
         'username': username.value,
         'password': password.value,
-        'passwordCheckBox': passwordCheckBox.value
     }
 
     param.append("key", encryptor.encrypt(JSON.stringify(profile_info)));
     param.append('timestamp', new Date().getTime().toString());
-    axios.post('/register', param)
+    axios.post('/login', param)
         .then(function (response) {
-            console.log(response);
             if (response.status === 200){
-                window.location.href = '/chat/index'
+                let nextHref = getNext();
+                if (getNext() !== null) {
+                    window.location.href = nextHref;
+                } else {
+                    window.location.href = '/chat/index';
+                }
             } else {
-                window.location.href = '/register'
+                window.location.href = '/login';
             }
 
         })
         .catch(function (error) {
             console.log(error);
-            window.location.href = '/register'
+            // window.location.href = '/login'
 
     });
 }
