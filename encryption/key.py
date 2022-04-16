@@ -25,16 +25,16 @@ print("RES Key Initialization Completed")
 
 class RSAManager:
     def __init__(self):
-        with open('pub_8.pem', 'r') as f:
+        with open('encryption/pri_1.pem', 'r') as f:
             self.PUBLIC_KEY_8 = f.read()
 
-        with open('pri_8.pem', 'r') as f:
+        with open('encryption/pri_1.pem', 'r') as f:
             self.PRIVATE_KEY_8 = f.read()
 
-        with open('pub_1.pem', 'r') as f:
+        with open('encryption/pri_1.pem', 'r') as f:
             self.PUBLIC_KEY_1 = f.read()
 
-        with open('pri_1.pem', 'r') as f:
+        with open('encryption/pri_1.pem', 'r') as f:
             self.PRIVATE_KEY_1 = f.read()
 
     # Reference:  https://blog.csdn.net/weixin_44777680/article/details/106444437
