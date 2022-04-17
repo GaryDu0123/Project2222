@@ -6,7 +6,9 @@ from django.http import HttpResponse, HttpResponseServerError, Http404, HttpResp
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
+from django.db import transaction
 from encryption.key import RSA_manager
+from encryption.models import KeyManager
 import json
 
 
@@ -64,17 +66,22 @@ def register(request):
         try:
             data = RSA_manager.decrypt(request.POST['key'])
             request_data = json.loads(data)
+            print(request_data)
             username = request_data['username']
             password = request_data['password']
             password_check_box = request_data['passwordCheckBox']
+            public_key = request.POST['publicKey']
             if password != password_check_box:
                 # todo 添加警示错误
                 raise Exception
-            user = User.objects.create_user(username, email=None, password=password)
+            with transaction.atomic():
+                user = User.objects.create_user(username, email=None, password=password)
+                KeyManager.objects.create(user=user, public_key=public_key)
         except Exception as e:
             print(e)
             # todo 添加警示错误
             return HttpResponse(status=403)
+
         login(request, user)
         # todo 添加提示
         return HttpResponse(status=200)

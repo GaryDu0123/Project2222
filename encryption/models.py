@@ -11,6 +11,6 @@ from django.contrib.auth.models import User
 # Create your models here.
 
 
-class PublicManage(models.Model):
-    user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
+class KeyManager(models.Model):
+    user = models.OneToOneField(settings.AUTH_USER_MODEL, on_delete=models.CASCADE)
     public_key = models.TextField()
