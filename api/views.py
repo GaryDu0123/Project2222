@@ -4,6 +4,7 @@ from django.contrib.auth.models import User
 from django.db.models import Q
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render
+from encryption.models import KeyManager
 from django.contrib.auth.decorators import login_required
 from chat.models import FriendRelationship, MessageRecord
 import utils
@@ -31,11 +32,23 @@ def get_user_friend_box(request):
     friend_list = {}
     count = 0
     for friend in FriendRelationship.objects.filter(user_1=user):
-        friend_list[count] = friend.user_2.username
-        count += 1
+        try:
+            friend_list[count] = {
+                'username': friend.user_2.username,
+                'public_key': KeyManager.objects.get(user=friend.user_2).public_key
+            }
+            count += 1
+        except Exception as e:
+            print(e)
     for friend in FriendRelationship.objects.filter(user_2=user):
-        friend_list[count] = friend.user_1.username
-        count += 1
+        try:
+            friend_list[count] = {
+                'username': friend.user_1.username,
+                'public_key': KeyManager.objects.get(user=friend.user_1).public_key
+            }
+            count += 1
+        except Exception as e:
+            print(e)
     return JsonResponse(friend_list)
 
 
@@ -76,7 +89,7 @@ def initialize_chat_box(request):
 
     query_result = MessageRecord.objects.filter(
         Q(sender=user1, receiver=user2) | Q(sender=user2, receiver=user1)
-    ).order_by('message_id')
+    ).filter(belong=user1).order_by('message_id')
     ret_dic = {}
     counter = 0
     for result in query_result:
@@ -85,6 +98,7 @@ def initialize_chat_box(request):
             "from": "sender" if result.sender == user1 else "receiver"
         }
         counter += 1
+    ret_dic['userPublicKey'] = KeyManager.objects.get(user=user1).public_key
     return JsonResponse(ret_dic)
 
 
@@ -102,7 +116,7 @@ def polling_update_message(request):
         date = datetime.fromtimestamp(user_timestamp / 1000)
 
         query_result = MessageRecord.objects.filter(
-            sender=user2, receiver=user1
+            sender=user2, receiver=user1, belong=user1
         ).filter(timestamp__gte=date).order_by('message_id')
         ret_dic = {}
         counter = 0
@@ -112,7 +126,7 @@ def polling_update_message(request):
                 "from": "sender" if result.sender == user1 else "receiver"
             }
         counter += 1
-        print(ret_dic, user_timestamp)
+        # print(ret_dic, user_timestamp)
         return JsonResponse(ret_dic)
     except Exception as e:
         print(e)

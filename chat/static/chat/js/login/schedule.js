@@ -3,7 +3,10 @@ manager.currentSession = null;
 manager.timestamp = null;
 manager.userBoxResponse = null;
 manager.currentTimerId = null;
+manager.userPrivateKey = null;
+manager.userPublicKey = null;
 
+console.log(manager)
 
 axios.interceptors.request.use((config) => {
     config.headers['X-Requested-With'] = 'XMLHttpRequest';
@@ -64,11 +67,11 @@ async function createUserBox() {
     }
     manager.userBoxResponse = response.data
     for (let record in response.data) {
-        navBar.appendChild(createBox('div', 'userBox', response.data[record]));
+        navBar.appendChild(createBox('div', 'userBox', response.data[record].username));
     }
 }
 
-function requestMessageDataAndUpdate(urls, param) {
+function requestMessageDataAndUpdate(urls, param, isInit=false) {
     const navBar = document.querySelector(".chatBox");
     axios.post(urls, param)
         .then(function (response) {
@@ -79,13 +82,35 @@ function requestMessageDataAndUpdate(urls, param) {
             if (response.data.length !== 0){
                 manager.timestamp = new Date().getTime().toString();
             }
+            if (isInit){
+                manager.userPublicKey = response.data.userPublicKey
+            }
+            // console.log(response.data)
             for (let record in response.data) {
                 if (response.data[record].content === undefined || response.data[record].from === undefined) {
                     return;
                 }
                 // console.log(response.data[record].content)
-                let content = response.data[record].content;
+                // todo
+                const verify_self = new JSEncrypt();
+                const verify_sender = new JSEncrypt();
+                const encryptor_self = new JSEncrypt();
+                verify_self.setPublicKey(manager.userPublicKey)
+                verify_sender.setPublicKey(manager.userBoxResponse[manager.currentSession]['public_key'])
+                encryptor_self.setPrivateKey(manager.userPrivateKey)
+                let message_box = JSON.parse(encryptor_self.decryptLong(response.data[record].content).toString())
                 let from = response.data[record].from;
+
+                if (from === "sender") {
+                    if (!verify_self.verify(message_box[0], message_box[1], CryptoJS.SHA256)){
+                        continue;
+                    }
+                } else if (from === "receiver") {
+                    if (!verify_sender.verify(message_box[0], message_box[1], CryptoJS.SHA256)){
+                        continue;
+                    }
+                }
+                let content = message_box[0];
                 let innerDiv = document.createElement("div");
                 innerDiv.className = "chatText"
                 innerDiv.innerText = content
@@ -115,24 +140,21 @@ function initializeChatBox() {
         return
     }
     let param = new URLSearchParams()
-    param.append("receiver", manager.userBoxResponse[manager.currentSession]);
-    requestMessageDataAndUpdate('/api/initChatData', param);
+    param.append("receiver", manager.userBoxResponse[manager.currentSession].username);
+    requestMessageDataAndUpdate('/api/initChatData', param, true);
 }
 
 async function main() {
     await createUserBox();
 }
 
-main().then()
-
-
 function updateMessageBox() {
     console.log({
-        "receiver": manager.userBoxResponse[manager.currentSession],
+        "receiver": manager.userBoxResponse[manager.currentSession].username,
         "timestamp": manager.timestamp
     })
     let param = new URLSearchParams()
-    param.append("receiver", manager.userBoxResponse[manager.currentSession]);
+    param.append("receiver", manager.userBoxResponse[manager.currentSession].username);
     param.append("timestamp", manager.timestamp);
     requestMessageDataAndUpdate('/api/polling_message', param)
 }
@@ -143,3 +165,8 @@ function setPolling() {
     }, 3000);
 }
 
+window.onload = function (){
+    const login_username = document.querySelector('#username').value;
+    manager.userPrivateKey = JSON.parse(localStorage.getItem(login_username)).privateKey;
+    main().then()
+}

@@ -1,6 +1,8 @@
+import json
 import time
 from datetime import datetime
 
+from django.db import transaction
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
@@ -12,7 +14,7 @@ import utils
 # Create your views here.
 @login_required
 def index(request):
-    return render(request, 'chat/index.html')
+    return render(request, 'chat/index.html', {'username': request.user.username})
 
 
 def debug_add_friend(request):
@@ -43,11 +45,24 @@ def message_receive(request):
             raise Exception
         timestamp = int(request.POST["timestamp"])
         date = datetime.fromtimestamp(timestamp / 1000)
-        record = MessageRecord.objects.create(sender=user1,
-                                              receiver=user2,
-                                              message=request.POST["content"],
-                                              timestamp=date)
-        record.save()
+        message = json.loads(request.POST["content"])
+        sender_version = message['sender']
+        receiver_version = message['receiver']
+        with transaction.atomic():
+            record_sender = MessageRecord.objects.create(sender=user1,
+                                                         receiver=user2,
+                                                         message=sender_version,
+                                                         timestamp=date,
+                                                         belong=user1
+                                                         )
+            record_receiver = MessageRecord.objects.create(sender=user1,
+                                                           receiver=user2,
+                                                           message=receiver_version,
+                                                           timestamp=date,
+                                                           belong=user2
+                                                           )
+            record_sender.save()
+            record_receiver.save()
     except Exception as e:
         print(e)
         return HttpResponse(status=403)

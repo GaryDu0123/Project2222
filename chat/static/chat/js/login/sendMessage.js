@@ -6,21 +6,41 @@ function sendCheck(writeBox) {
     return writeBox.innerText === "";
 }
 
+
+function rsaSign(plainText){
+    let signText = new JSEncrypt();
+    signText.setPrivateKey(manager.userPrivateKey);
+    return signText.sign(plainText, CryptoJS.SHA256, "sha256");
+}
+
+
 // todo 验证数据
 async function axiosRequest(text) {
     let param = new URLSearchParams()
-    param.append("content", text);
-    param.append('timestamp', new Date().getTime().toString())
-    param.append('receiver', manager.userBoxResponse[manager.currentSession])
-    return await axios.post('/chat/debug/messageReceive', param)
+    let receiver = manager.userBoxResponse[manager.currentSession].username;
+    const encryptor_sender = new JSEncrypt();
+    const encryptor_receiver = new JSEncrypt();
+    let signedText = JSON.stringify([text, rsaSign(text)]);
+    encryptor_sender.setPublicKey(manager.userPublicKey);// 设置公钥
+    encryptor_receiver.setPublicKey(manager.userBoxResponse[manager.currentSession]['public_key']); // 设置公钥
+    let convert = {
+        'sender': encryptor_sender.encryptLong(signedText),
+        'receiver': encryptor_receiver.encryptLong(signedText)
+    }
+    console.log(convert)
+    param.append("content", JSON.stringify(convert));
+    param.append('timestamp', new Date().getTime().toString());
+    param.append('receiver', receiver);
+    return await axios.post('/chat/messageReceive', param)
         .then(function (response) {
-            console.log(response);
+            // console.log(response);
             return true;
         })
         .catch(function (error) {
             console.log(error);
             return false;
         });
+
 }
 
 async function seedMessage(writeBox) {

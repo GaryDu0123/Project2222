@@ -18,3 +18,4 @@ class MessageRecord(models.Model):
     receiver = models.ForeignKey(to=User, on_delete=models.CASCADE, related_name="receiver")
     timestamp = models.DateTimeField()
     message = models.TextField()
+    belong = models.ForeignKey(to=User, on_delete=models.CASCADE, related_name="belong")

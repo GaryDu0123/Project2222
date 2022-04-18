@@ -8,7 +8,7 @@
     <title>Chat</title>
 </head>
 <body>
-
+<input id='username' type="hidden" value="{{ username }}" disabled="disabled">
 <div class="toolbar">
     <div id="fill">
         <div>INFO2222 Project</div>
@@ -40,6 +40,10 @@
 
 </body>
 </html>
+{#<script src="https://cdn.bootcdn.net/ajax/libs/jsencrypt/3.2.1/jsencrypt.js"></script>#}
+<script src="{% static 'chat/js/encryptlong/bin/jsencrypt.js' %}"></script>
+<script src="https://cdn.bootcdn.net/ajax/libs/jsrsasign/10.5.13/jsrsasign-all-min.min.js"></script>
+{#<script src="https://cdn.bootcss.com/jsencrypt/3.0.0-beta.1/jsencrypt.js"></script>#}
 <script src="https://unpkg.com/axios@0.20.0/dist/axios.min.js"></script>
 <script type="module" src="{% static "chat/js/login/basic.js" %}"></script>
 <script type="module" src="{% static "chat/js/login/schedule.js" %}"></script>

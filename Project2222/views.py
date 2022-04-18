@@ -76,7 +76,9 @@ def register(request):
                 raise Exception
             with transaction.atomic():
                 user = User.objects.create_user(username, email=None, password=password)
-                KeyManager.objects.create(user=user, public_key=public_key)
+                key = KeyManager.objects.create(user=user, public_key=public_key)
+                user.save()
+                key.save()
         except Exception as e:
             print(e)
             # todo 添加警示错误

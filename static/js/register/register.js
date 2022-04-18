@@ -87,7 +87,6 @@ async function initSubmitButton() {
         console.log(err)
         return;
     }
-    console.log(keys);
     let userPublicKey = keys.publicKey;
     const encryptor = new JSEncrypt();
     encryptor.setPublicKey(publicKey.value); // 设置公钥
@@ -105,6 +104,10 @@ async function initSubmitButton() {
         .then(function (response) {
             console.log(response);
             if (response.status === 200) {
+                localStorage.setItem(username.value, JSON.stringify({
+                    'publicKey': keys.publicKey,
+                    'privateKey': keys.privateKey,
+                }))
                 window.location.href = '/chat/index'
             } else {
                 window.location.href = '/register'
