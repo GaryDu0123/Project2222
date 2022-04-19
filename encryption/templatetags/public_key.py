@@ -3,7 +3,7 @@
 
 from django import template
 from django.utils.html import format_html
-from ..key import RSA_manager
+from encryption.key import RSA_manager
 
 register = template.Library()
 

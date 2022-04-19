@@ -93,3 +93,14 @@ span.iconfont {
     box-shadow: #15defd 0 0 30px;
     transition: all 0.2s linear;
 }
+
+#loginError{
+    font-family: JetBrainsMono, "Microsoft YaHei UI", cursive;
+    border-radius: 5px;
+    background-color: rgba(247, 255, 0, 0.69);
+    width: 90%;
+    font-size: 14px;
+    margin: 0 auto;
+    border: solid 3px rgba(255, 0, 0, 0.8);
+    transition: all 0.2s linear;
+}

@@ -7,9 +7,24 @@ axios.interceptors.request.use((config) => {
 
 window.onload = function(){
     const submitButton = document.querySelector('#submitButton')
+    const username = document.querySelector('#username');
+    const password = document.querySelector("#password");
+    username.onclick = function(){
+        clearErrorTag()
+    }
+    password.onclick = function(){
+        clearErrorTag()
+    }
     submitButton.onclick = function(){
         initSubmitButton()
     };
+}
+
+function clearErrorTag(){
+    let errorTag = document.querySelector('#loginError')
+    if (errorTag !== null){
+        errorTag.remove()
+    }
 }
 
 function usernameCheck(){
@@ -17,6 +32,11 @@ function usernameCheck(){
     const usernameValue = username.value;
     return usernameValue.length >= 1;
 
+}
+
+function userPasswordCheck(){
+    const password = document.querySelector("#password");
+    return password.value.length >= 1;
 }
 
 function getNext() {
@@ -41,21 +61,39 @@ function getNext() {
     }
 }
 
+function showLoginErrorReason(errorText){
+    clearErrorTag()
+    const textBox = document.querySelector('#textBox');
+    const postForm = document.querySelector('#postForm');
+    let error_node = document.createElement('div')
+    error_node.id = 'loginError'
+    error_node.innerText = errorText
+    postForm.insertBefore(error_node, textBox)
+
+}
+
+function clearPasswordInput(){
+    const password = document.querySelector("#password");
+    password.value = '';
+}
+
 function initSubmitButton(){
-    const username = document.querySelector('#username')
-    const password = document.querySelector("#password")
-    const publicKey = document.querySelector('#public_key')
-    if (!usernameCheck()){
-        return
-    }
-    if (publicKey === null){
-        console.error("Public Key Not Found")
+    const username = document.querySelector('#username');
+    const password = document.querySelector("#password");
+    const publicKey = document.querySelector('#public_key');
+    if (!(usernameCheck() && userPasswordCheck())){
+        showLoginErrorReason('Error: Username or password should not be empty.');
         return;
     }
-    const encryptor = new JSEncrypt()
-    encryptor.setPublicKey(publicKey.value) // 设置公钥
+    if (publicKey === null){
+        console.error("Public Key Not Found");
+        showLoginErrorReason('Error: Public Key Not Found.');
+        return;
+    }
+    const encryptor = new JSEncrypt();
+    encryptor.setPublicKey(publicKey.value); // 设置公钥
 
-    let param = new URLSearchParams()
+    let param = new URLSearchParams();
     let profile_info = {
         'username': username.value,
         'password': password.value,
@@ -73,14 +111,15 @@ function initSubmitButton(){
                     window.location.href = '/chat/index';
                 }
             } else {
-                window.location.href = '/login';
+                showLoginErrorReason('Error: Incorrect username or password.');
+                clearPasswordInput();
             }
 
         })
         .catch(function (error) {
             console.log(error);
-            // window.location.href = '/login'
-
+            showLoginErrorReason('Error: Incorrect username or password.')
+            clearPasswordInput();
     });
 }
 

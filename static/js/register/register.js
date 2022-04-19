@@ -60,11 +60,15 @@ function usernameCheck() {
     const username = document.querySelector("#username");
     const usernameValue = username.value;
     return usernameValue.length >= 1;
+}
 
+function userPasswordCheck(){
+    const password = document.querySelector("#password");
+    return password.value.length >= 1;
 }
 
 function checkAll() {
-    return inputBoxCheck() && usernameCheck()
+    return inputBoxCheck() && usernameCheck() && userPasswordCheck()
 }
 
 
