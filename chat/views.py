@@ -18,18 +18,11 @@ def index(request):
 
 
 def debug_add_friend(request):
-    user1 = User.objects.get(id=5)
-    user2 = User.objects.get(id=7)
-    FriendRelationship.objects.create(user1=user1, user2=user2)
+    user1 = User.objects.get(id=2)
+    user2 = User.objects.get(id=3)
+    FriendRelationship.objects.create(user_1=user1, user_2=user2)
     return HttpResponse(f"{user1}\n{user2}")
 
-
-def debug_add_message(request):
-    user1 = User.objects.get(id=5)
-    user2 = User.objects.get(id=7)
-    MessageRecord.objects.create(sender=user1, receiver=user2, message="你好7")
-    return HttpResponse(f"{user1}\n{user2}")
-    # record1 = MessageRecord.objects.filter(sender=user1)
 
 
 def message_receive(request):

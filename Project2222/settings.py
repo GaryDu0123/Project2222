@@ -35,8 +35,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'werkzeug_debugger_runserver',  # 开启https需要的服务
-    'django_extensions',  # 开启https需要的服务
+    'werkzeug_debugger_runserver',
+    'django_extensions',
     "sslserver",
     'chat',
     'api',
@@ -76,14 +76,21 @@ WSGI_APPLICATION = 'Project2222.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': "project2222",
+#         'USER': "root",
+#         'PASSWORD': "114133627",
+#         'HOST': '127.0.0.1',
+#         "PORT": '3306'
+#     }
+# }
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': "project2222",
-        'USER': "root",
-        'PASSWORD': "114133627",
-        'HOST': '127.0.0.1',
-        "PORT": '3306'
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
 
