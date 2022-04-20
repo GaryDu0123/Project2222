@@ -93,7 +93,7 @@ async function initSubmitButton() {
     }
     let userPublicKey = keys.publicKey;
     const encryptor = new JSEncrypt();
-    encryptor.setPublicKey(publicKey.value); // 设置公钥
+    encryptor.setPublicKey(publicKey.value); // set public key
     let param = new URLSearchParams()
     let profile_info = {
         'username': username.value,

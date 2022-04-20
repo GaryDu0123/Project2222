@@ -1,3 +1,5 @@
+@import url("/static/css/font/font.css");
+
 body{
     overflow: hidden;
     background: url('/static/img/login/あおいとり_てるちゃん＿pid87331064.png') no-repeat top center;
@@ -51,6 +53,7 @@ li a {
     text-decoration: none;
     transition: all 0.2s linear;
     font-size:16px;
+    font-family: "Microsoft YaHei UI", ui-sans-serif;
 }
 
 li a:hover {

@@ -62,18 +62,18 @@ def register(request):
     if request.method == 'GET':
         return render(request, "register.html")
     elif request.method == 'POST':
-        # todo 不安全!!!!!! 警告
         try:
-            data = RSA_manager.decrypt(request.POST['key'])
-            request_data = json.loads(data)
-            print(request_data)
-            username = request_data['username']
-            password = request_data['password']
-            password_check_box = request_data['passwordCheckBox']
-            public_key = request.POST['publicKey']
+            data = RSA_manager.decrypt(request.POST['key'])  # private key decrypts ciphertext
+            request_data = json.loads(data)  # change the json string to dict
+            username = request_data['username']  # get username
+            password = request_data['password']  # get password
+            password_check_box = request_data['passwordCheckBox']  # get checkbox
+            public_key = request.POST['publicKey']  # get user public key
             if password != password_check_box:
-                # todo 添加警示错误
                 raise Exception
+            # transaction.atomic() guaranteed that both insert statements can be
+            # successfully executed, and any statement that fails will fall back
+            # to before execution.
             with transaction.atomic():
                 user = User.objects.create_user(username, email=None, password=password)
                 key = KeyManager.objects.create(user=user, public_key=public_key)
@@ -81,11 +81,8 @@ def register(request):
                 key.save()
         except Exception as e:
             print(e)
-            # todo 添加警示错误
             return HttpResponse(status=403)
-
         login(request, user)
-        # todo 添加提示
         return HttpResponse(status=200)
     raise Http404("Page does not exist")
 

@@ -91,7 +91,7 @@ function initSubmitButton(){
         return;
     }
     const encryptor = new JSEncrypt();
-    encryptor.setPublicKey(publicKey.value); // 设置公钥
+    encryptor.setPublicKey(publicKey.value); // set public key
 
     let param = new URLSearchParams();
     let profile_info = {
@@ -99,7 +99,7 @@ function initSubmitButton(){
         'password': password.value,
     }
 
-    param.append("key", encryptor.encrypt(JSON.stringify(profile_info)));
+    param.append("key", encryptor.encrypt(JSON.stringify(profile_info))); // encrypt the message
     param.append('timestamp', new Date().getTime().toString());
     axios.post('/login', param)
         .then(function (response) {

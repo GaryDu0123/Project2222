@@ -21,17 +21,17 @@ async function axiosRequest(text) {
     const encryptor_sender = new JSEncrypt();
     const encryptor_receiver = new JSEncrypt();
     let signedText = JSON.stringify([text, rsaSign(text)]);
-    encryptor_sender.setPublicKey(manager.userPublicKey);// 设置公钥
-    encryptor_receiver.setPublicKey(manager.userBoxResponse[manager.currentSession]['public_key']); // 设置公钥
+    encryptor_sender.setPublicKey(manager.userPublicKey);// set A public key
+    encryptor_receiver.setPublicKey(manager.userBoxResponse[manager.currentSession]['public_key']); // set B public key
     let convert = {
-        'sender': encryptor_sender.encryptLong(signedText),
-        'receiver': encryptor_receiver.encryptLong(signedText)
+        'sender': encryptor_sender.encryptLong(signedText), // sender message encrypt with A's public key
+        'receiver': encryptor_receiver.encryptLong(signedText) // sender message encrypt with B's public key
     }
     console.log(convert)
-    param.append("content", JSON.stringify(convert));
-    param.append('timestamp', new Date().getTime().toString());
+    param.append("content", JSON.stringify(convert)); // convert object to json string
+    param.append('timestamp', new Date().getTime().toString()); // get current timestamp
     param.append('receiver', receiver);
-    return await axios.post('/chat/messageReceive', param)
+    return await axios.post('/chat/messageReceive', param) // send the message to server
         .then(function (response) {
             // console.log(response);
             return true;

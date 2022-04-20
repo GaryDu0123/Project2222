@@ -7,3 +7,56 @@
     margin:50px auto;
     border-radius: 20px;
 }
+
+#group-number{
+    color: white;
+    text-align: center;
+    font-weight:bold;
+    text-shadow: 2px 1px 0 rgba(0, 0, 0, 0.6);
+    padding: 14px 16px;
+    text-decoration: none;
+    transition: all 0.2s linear;
+    font-size: 25px;
+    font-family: "Microsoft YaHei UI", ui-sans-serif;
+}
+
+.mainBox>img{
+    height: 140px;
+    width: 139px;
+    zoom: 150%;
+}
+
+.containPolaroid{
+    display: inline-block;
+    height: 320px;
+    width: 330px;
+}
+
+div.polaroid{
+    width:294px;
+    padding:10px 10px 20px 10px;
+    border:1px solid #BFBFBF;
+    background-color:white;
+    /* Add box-shadow */
+    box-shadow:2px 2px 3px #aaaaaa;
+    display: inline-block;
+}
+
+div.rotate_right
+{
+    background-color: rgba(255, 255, 255, 0.6);
+    -ms-transform:rotate(-8deg); /* IE 9 */
+    -moz-transform:rotate(-8deg); /* Firefox */
+    -webkit-transform:rotate(-8deg); /* Safari and Chrome */
+    -o-transform:rotate(-8deg); /* Opera */
+    transform:rotate(-8deg);
+    display: inline-block;
+}
+
+p {
+    color: white;
+    text-align: center;
+    font-weight:bold;
+    text-shadow: 2px 2px 1px rgba(0, 0, 0, 0.6);
+    font-family: "Microsoft YaHei UI", ui-sans-serif;
+}

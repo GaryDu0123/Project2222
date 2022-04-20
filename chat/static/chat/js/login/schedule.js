@@ -28,11 +28,11 @@ function changeSessionListener() {
         nodes[manager.currentSession].classList.remove('useBoxOnSelect')
     }
 
-    // 改变当前的会话index
+    // change current session index
     manager.currentSession = nodes.indexOf(this)
     this.classList.add('useBoxOnSelect')
 
-    // 重新获取用户的信息
+    // re-get user information
     initializeChatBox()
     clearInterval(manager.currentTimerId)
     manager.currentTimerId = setPolling()
@@ -90,22 +90,25 @@ function requestMessageDataAndUpdate(urls, param, isInit=false) {
                 if (response.data[record].content === undefined || response.data[record].from === undefined) {
                     return;
                 }
-                // console.log(response.data[record].content)
-                // todo
                 const verify_self = new JSEncrypt();
                 const verify_sender = new JSEncrypt();
                 const encryptor_self = new JSEncrypt();
+                // A's public key to verify the message which send by A
                 verify_self.setPublicKey(manager.userPublicKey)
+                // B's public key to verify the message which send by B
                 verify_sender.setPublicKey(manager.userBoxResponse[manager.currentSession]['public_key'])
+                // A's private key to decrypt the message which belongs A
                 encryptor_self.setPrivateKey(manager.userPrivateKey)
                 let message_box = JSON.parse(encryptor_self.decryptLong(response.data[record].content).toString())
                 let from = response.data[record].from;
 
                 if (from === "sender") {
+                    // verify the sign is it send by A it self
                     if (!verify_self.verify(message_box[0], message_box[1], CryptoJS.SHA256)){
                         continue;
                     }
                 } else if (from === "receiver") {
+                    // verify the sign is it send by B
                     if (!verify_sender.verify(message_box[0], message_box[1], CryptoJS.SHA256)){
                         continue;
                     }
@@ -127,7 +130,7 @@ function requestMessageDataAndUpdate(urls, param, isInit=false) {
                 navBar.appendChild(outerDiv);
                 navBar.scrollTop = navBar.scrollHeight;
             }
-            // 设置此次更新的时间戳, 供定时任务使用
+            // Set the timestamp of this update for use by scheduled tasks
         })
         .catch(function (error) {
             console.log(error);
