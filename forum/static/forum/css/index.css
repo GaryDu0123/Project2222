@@ -131,6 +131,7 @@ body {
 }
 
 .sendTitle {
+    outline: none;
     justify-content: center;
     padding: 7px 10px;
     margin-top: 6px;
@@ -229,6 +230,11 @@ body {
     word-break: break-all;
 }
 .name {
+    color: #555666;
+    font-size: 14px;
+}
+
+.time {
     color: #555666;
     font-size: 14px;
 }

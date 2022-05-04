@@ -7,5 +7,6 @@ from . import views
 
 urlpatterns = [
     path('index', views.index),
+    path('post', views.receivePost),
 ]
 
