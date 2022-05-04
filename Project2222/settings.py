@@ -40,7 +40,8 @@ INSTALLED_APPS = [
     "sslserver",
     'chat',
     'api',
-    'encryption'
+    'encryption',
+    'forum'
 ]
 
 MIDDLEWARE = [
@@ -76,23 +77,23 @@ WSGI_APPLICATION = 'Project2222.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.mysql',
-#         'NAME': "project2222",
-#         'USER': "root",
-#         'PASSWORD': "114133627",
-#         'HOST': '127.0.0.1',
-#         "PORT": '3306'
-#     }
-# }
-
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': "project2222",
+        'USER': "root",
+        'PASSWORD': "114133627",
+        'HOST': '127.0.0.1',
+        "PORT": '3306'
     }
 }
+
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
 
 # Password validation
 # https://docs.djangoproject.com/en/4.0/ref/settings/#auth-password-validators
@@ -123,14 +124,15 @@ USE_I18N = True
 
 USE_TZ = False
 
-# Static files (CSS, JavaScript, Images)
+# Static files (css, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.0/howto/static-files/
 
 STATIC_URL = 'static/'
 
 STATICFILES_DIRS = (
     os.path.join(BASE_DIR, 'static'),
-    os.path.join(BASE_DIR, 'chat', 'static')
+    os.path.join(BASE_DIR, 'chat', 'static'),
+    os.path.join(BASE_DIR, 'forum', 'static')
 )
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field

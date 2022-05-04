@@ -33,6 +33,7 @@ urlpatterns = [
     path('logout', views.logout_button),
     path('chat/', include('chat.urls')),
     path('api/', include('api.urls')),
+    path('forum/', include('forum.urls')),
     path('change-password/', auth_views.PasswordChangeView.as_view())
 ]
 

@@ -8858,7 +8858,7 @@ exports.colors = [
 /**
  * Currently only WebKit-based Web Inspectors, Firefox >= v31,
  * and the Firebug extension (any Firefox version) are known
- * to support "%c" CSS customizations.
+ * to support "%c" css customizations.
  *
  * TODO: add a `localStorage` variable to explicitly enable/disable colors
  */
@@ -8924,7 +8924,7 @@ function formatArgs(args) {
 
   // the final "%c" is somewhat tricky, because there could be other
   // arguments passed either before or after the %c, so we need to
-  // figure out the correct index to insert the CSS into
+  // figure out the correct index to insert the css into
   var index = 0;
   var lastC = 0;
   args[0].replace(/%[a-zA-Z%]/g, function(match) {
@@ -9385,7 +9385,7 @@ return /******/ (function(modules) { // webpackBootstrap
 	 * JsDiff.diffWords: Word (as defined by \b regex) diff which ignores whitespace
 	 * JsDiff.diffLines: Line based diff
 	 *
-	 * JsDiff.diffCss: Diff targeted at CSS content
+	 * JsDiff.diffCss: Diff targeted at css content
 	 *
 	 * These methods are based on the implementation proposed in
 	 * "An O(ND) Difference Algorithm and its Variations" (Myers, 1986).

@@ -1,0 +1,69 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="{% static "forum/css/index.css" %}">
+    <link rel="stylesheet" href={% static "icon/font_3291112_6wb3t6ppuia/iconfont.css" %}>
+    <script type="module" src="{% static 'forum/js/index.js' %}"></script>
+</head>
+<body>
+<div class="toolbar">
+    <div id="fill">
+        <div>INFO2222 Project</div>
+    </div>
+    <div id="logout" class="toolBox">
+        <span id="logoutIcon" class="iconfont icon-tuichudenglu"></span>
+    </div>
+</div>
+<div class="content">
+    <div class="chatBar">
+        <div class="blogBox">
+            {#     start       #}
+            <ul class="blog-item-box">
+                <li>
+                    <article>
+                        <div class="title">Made in Abyss</div>
+                        <div class="name">From Wikipedia, the free encyclopedia</div>
+                        <div class="blogText">
+                            An orphaned girl named Riko lives in the Belchero Orphanage in the town of Orth. The town surrounds a strange, giant hole descending deep into the earth, which is known as the Abyss. The Abyss harbors artifacts and remnants of civilizations long gone, and is, therefore, a popular hunting spot for so-called Cave Raiders, who undertake arduous and dangerous descents into the mist-filled pit to recover whatever relics they can find. Returning from the Abyss can be dangerous as "the Curse of the Abyss," a mysterious and potentially fatal malady, manifests upon ascension. The deeper one goes, the more acute the effects of the curse; few who have descended into the lower regions have returned to tell of their experiences. Some legendary Cave Raiders earn the title of White Whistles, one of them being Riko's mother, Lyza, who is presumed dead after taking a "last descent" into the Abyss.<br/>
+                            Riko's longing in life is to follow in her mother's footsteps and become a White Whistle.[3] One day, she discovers a robot resembling a human boy in the second layer of the Abyss and names him Reg. Riko and her friends sneak Reg into Belchero and quickly welcome him into their close-knit group. Sometime later, a number of findings are made from the depths of the Abyss, including Lyza’s White Whistle and pages of discoveries and observations she had made, as well as a message presumably for Riko, stating she is waiting at the bottom of the Abyss. Riko, determined to find her mother, bids farewell to her friends and secretly departs into the Abyss with Reg as her companion.<br/>
+                        </div>
+                    </article>
+                </li>
+                <li>
+                    <article>
+                        <div class="title">Is the Order a Rabbit?</div>
+                        <div class="name">From Wikipedia, the free encyclopedia</div>
+                        <div class="blogText">
+                            In a small European styled town in Japan, teenage Cocoa Hoto enters the cafe Rabbit House, assuming there are rabbits to be cuddled. What Cocoa actually finds is her high school boarding house, staffed by the owner's daughter, Chino Kafū, a small, precocious, and somewhat shy girl with an angora rabbit on top of her head. She quickly befriends Chino with the full intention of becoming like her older sister, much to Chino's annoyance. From there she will experience her new life and befriend many others, including the military-influenced, yet feminine Rize Tedeza, the playful Chiya Ujimatsu who goes at her own pace, and the impoverished Syaro Kirima who commands an air of nobility and admiration despite her background. Slowly, through slices of life, often comedic, Cocoa becomes irreplaceable in her new friends' lives, with Chino at the forefront.<br/>
+                        </div>
+                    </article>
+                </li>
+                <li>
+                    <article>
+                        <div class="title">Asteroid in Love</div>
+                        <div class="name">From Wikipedia, the free encyclopedia</div>
+                        <div class="blogText">
+                            During her childhood, a girl named Mira befriends a boy named Ao and makes a promise with him to discover an asteroid. Upon entering high school, Mira joins the earth sciences club, a merger of the school's astronomy and geology clubs, and reunites with Ao, who she discovers is actually a girl. Alongside their fellow club members, Mira and Ao take part in various astronomical and geological activities in the hopes of one day discovering an asteroid.
+                        </div>
+                    </article>
+                </li>
+            </ul>
+        </div>
+        {#     end       #}
+        <div class="writeBox">
+            <div class="sendTitle" placeholder="Enter your title here" contenteditable="true"></div>
+            <div class="sendWindow" contenteditable="true"></div>
+            <div class="sendButton">
+                <button id="sendTextButton" type="button">Send</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="bottomBar"></div>
+
+</body>
+</html>

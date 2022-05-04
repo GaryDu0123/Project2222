@@ -1,0 +1,234 @@
+@import url("/static/css/font/font.css");
+
+html, body {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+ul, li {
+    padding:0;
+    margin:0;
+    list-style:none;
+}
+
+
+body {
+    overflow: hidden;
+    background: url('/static/chat/img/あおいとり_横になる_pid84860829.PNG') no-repeat top center;
+    background-size: cover;
+    display: flex;
+    display: -webkit-flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+/*定义整体的滚动条设置*/
+/* reference: https://www.cnblogs.com/wwqzbl/p/15391941.html*/
+/* scroll bar start*/
+*::-webkit-scrollbar {
+    background: transparent;
+    width: 6px;
+    height: 6px;
+}
+
+*::-webkit-scrollbar-thumb {
+    border-radius: 4px;
+    background: transparent;
+}
+
+*:hover::-webkit-scrollbar-thumb {
+    background: hsla(0, 0%, 53%, 0.4);
+}
+
+*:hover::-webkit-scrollbar-track {
+    background: hsla(0, 0%, 53%, 0.1);
+}
+
+/* scroll bar end*/
+
+/* 整体的布局配置 */
+/* tool bar display start */
+.toolbar {
+    display: flex;
+    display: -webkit-flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: row;
+    width: 100%;
+    height: 56px;
+    background-color: rgba(0, 242, 254, 0.3);
+}
+
+.toolBox{
+    height: 56px;
+    width: 56px;
+}
+
+#fill{
+    flex-grow: 1;
+}
+
+#fill>div{
+    margin-left: 30px;
+    color: white;
+    font-weight:bold;
+    text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.6);
+    font-size: 20px;
+}
+
+#logoutIcon{
+    width: 56px;
+    height: 56px;
+    display: flex;
+    display: -webkit-flex;
+    align-items: center;
+    justify-content: center;
+    color: #266165;
+    font-size: 25px;
+}
+
+#logout:hover{
+    transition: all 0.2s linear;
+    background-color: #6fabb0;
+    color: #000000;
+}
+
+/* tool bar display end */
+
+/* bottom display start */
+.bottomBar {
+    flex-grow: 0;
+    height: 36px;
+    width: 100%;
+    background-color: rgba(0, 242, 254, 0.3);
+}
+
+/* bottom display end */
+
+.content {
+    width: 100%;
+    display: flex;
+    display: -webkit-flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.writeBox {
+    width: 100%;
+    height: 180px;
+    background-color: rgba(135, 206, 235, 0.5);
+    display: -webkit-flex;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.sendTitle {
+    justify-content: center;
+    padding: 7px 10px;
+    margin-top: 6px;
+    height: 20px;
+    width: calc(98% - 20px);
+    background-color: rgba(226, 226, 227, 0.68);
+}
+.sendTitle:empty::before {
+    content: attr(placeholder);
+    color: #bebebe;
+}
+
+.sendWindow {
+    height: calc(100% - 60px);
+    width: calc(98% - 20px);
+    justify-content: center;
+    margin-top: 6px;
+    background-color: rgba(226, 226, 227, 0.68);
+    padding: 7px 10px;
+    word-break: break-all;
+    overflow: auto;
+    border-radius: 4px;
+}
+
+.sendWindow:focus {
+    outline: none;
+}
+
+.sendButton {
+    width: 100%;
+    height: 30px;
+    margin: 4px 0;
+}
+
+.sendButton > #sendTextButton {
+    float: right;
+    height: 30px;
+    width: 70px;
+    border-radius: 7px;
+    margin-right: 10px;
+    border: 0; /* 删除按钮边框 */
+	font-family: "Microsoft YaHei", cursive;
+	font-size: 14px;
+    transition: all 0.2s linear;
+}
+
+.sendButton > #sendTextButton:hover {
+    background-color: rgba(231, 231, 231, 0.84);
+    transition: all 0.2s linear;
+}
+
+.sendButton > #sendTextButton:active {
+    background-color: rgba(157, 213, 151, 0.84);
+    transition: all 0.2s linear;
+}
+
+.blogBox {
+    display: flex;
+    display: -webkit-flex;
+    /*align-items: center;*/
+    justify-content: center;
+    height: calc(100% - 180px);
+    width: 100%;
+    background-color: rgba(255, 255, 255, 0.37);
+    overflow: auto;
+}
+.chatBar {
+    width: 100%;
+    height: calc(100vh - 92px);
+    display: -webkit-flex;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+/* blog context part */
+.blog-item-box {
+    height: 100%;
+    width: 80%;
+}
+
+.blog-item-box > li {
+    margin-top: 10px;
+    margin-bottom: 10px;
+    background-color: rgba(255, 255, 255, 0.85);
+    padding: 10px;
+    box-shadow: 0 0 .5rem rgba(0, 0, 0, .1);
+    border-radius: 0.5rem;
+}
+
+.title {
+    font-size: 28px;
+    word-wrap: break-word;
+    color: #222226;
+    font-weight: 600;
+    margin: 0;
+    word-break: break-all;
+}
+.name {
+    color: #555666;
+    font-size: 14px;
+}
