@@ -112,7 +112,7 @@ async function initSubmitButton() {
                     'publicKey': keys.publicKey,
                     'privateKey': keys.privateKey,
                 }))
-                window.location.href = '/chat/index'
+                window.location.href = '/main'
             } else {
                 window.location.href = '/register'
             }

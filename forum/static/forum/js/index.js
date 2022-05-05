@@ -20,8 +20,7 @@ async function axiosRequest() {
 
     return await axios.post('/forum/post', param) // send the message to server
         .then(function (response) {
-            console.log(response)
-            return response.data['status'] === '200';
+            return response['data']
         })
         .catch(function (error) {
             console.log(error);
@@ -33,9 +32,28 @@ async function seedMessage() {
     if (!sendCheck()) {
         return;
     }
-    if (await axiosRequest()) {
+    let request_data = await axiosRequest()
+    if (request_data['status'] === "200") {
+        console.log(request_data)
+        let new_element = "<li><article>\n" +
+            "                        <div class=\"title\">" +
+                                        sendTitle.innerText +
+            "                        </div>\n" +
+            "                        <div class=\"name\">" +
+                                        request_data['content'].user +
+            "                        </div>" +
+            "                        <div class=\"time\">" +
+                        request_data['content'].time +
+            "                        </div>" +
+            "                        <div class=\"blogText\">" +
+            writeBox.innerText +
+            "                        </div>" +
+            "                    </article> </li>"
         sendTitle.innerText = ""
         writeBox.innerText = ""
+        let blog_item_box = document.querySelector('ul.blog-item-box')
+        blog_item_box.innerHTML = new_element + blog_item_box.innerHTML
+
     } else {
         console.log("Send failed")
     }

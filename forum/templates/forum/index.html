@@ -11,7 +11,7 @@
 <body>
 <div class="toolbar">
     <div id="fill">
-        <div>INFO2222 Project</div>
+        <a href="/main">INFO2222 Project</a>
     </div>
     <div id="logout" class="toolBox">
         <span id="logoutIcon" class="iconfont icon-tuichudenglu"></span>
@@ -32,7 +32,7 @@
                             {{ data.user }}
                         </div>
                         <div class="time">
-                            {{ data.time }}
+                            {{ data.time | date:"Y-m-d H:i:s" }}
                         </div>
                         <div class="blogText">
                             {{ data.content | safe }}

@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+{% load static %}
+{% block style %}
+    <link rel="stylesheet" href="{% static "css/nav/nav.css" %}">
+{% endblock %}
+
+{% block body %}
+    <div class="nav-bar">
+        <div class="nav-box" onselectstart="return false;" onclick="window.location='/chat/index'">
+            Chat
+        </div>
+        <div class="nav-box" onselectstart="return false;" onclick="window.location='/forum/index'">
+            Forum
+        </div>
+    </div>
+{% endblock %}

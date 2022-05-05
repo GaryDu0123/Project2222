@@ -19,11 +19,15 @@ def receivePost(request):
         request_data = request.POST
         timestamp = int(request_data["timestamp"])
         date = datetime.fromtimestamp(timestamp / 1000)
-        Forum.objects.create(user=request.user,
-                             title=request_data['title'],
-                             content=request_data['content'],
-                             time=date
-                             )
-        return JsonResponse({'status': '200'})
+        message = Forum.objects.create(user=request.user,
+                                       title=request_data['title'],
+                                       content=request_data['content'],
+                                       time=date
+                                       )
+
+        return JsonResponse({'status': '200', "content": {
+            'user': message.user.username,
+            'time': message.time.strftime('%Y-%m-%d %H:%M:%S')
+        }})
     except Exception:
         return JsonResponse({'status': '403'})

@@ -67,12 +67,13 @@ body {
     flex-grow: 1;
 }
 
-#fill>div{
+#fill>a{
     margin-left: 30px;
     color: white;
     font-weight:bold;
     text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.6);
     font-size: 20px;
+    text-decoration:none;
 }
 
 #logoutIcon{

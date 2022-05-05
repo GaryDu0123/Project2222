@@ -108,7 +108,7 @@ function initSubmitButton(){
                 if (getNext() !== null) {
                     window.location.href = nextHref;
                 } else {
-                    window.location.href = '/chat/index';
+                    window.location.href = '/main';
                 }
             } else {
                 showLoginErrorReason('Error: Incorrect username or password.');

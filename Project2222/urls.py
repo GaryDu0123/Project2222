@@ -30,6 +30,7 @@ urlpatterns = [
     path('robots.txt', views.robot),
     path("favicon.ico", RedirectView.as_view(url='static/icon/favicon.ico')),
     path('test', views.test),
+    path('main', views.main),
     path('logout', views.logout_button),
     path('chat/', include('chat.urls')),
     path('api/', include('api.urls')),

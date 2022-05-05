@@ -103,3 +103,7 @@ def logout_button(request):
 @login_required
 def test(request):
     return render(request, "test.html")
+
+
+def main(request):
+    return render(request, 'nav.html')
