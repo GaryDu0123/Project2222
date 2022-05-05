@@ -5,8 +5,18 @@
     <meta charset="UTF-8">
     <title>Title</title>
     <link rel="stylesheet" href="{% static "forum/css/index.css" %}">
+    <link rel="stylesheet" href="{% static "forum/css/ripple.css" %}">
     <link rel="stylesheet" href={% static "icon/font_3291112_6wb3t6ppuia/iconfont.css" %}>
+    <link href="https://cdn.jsdelivr.net/npm/@wangeditor/editor@latest/dist/css/style.css" rel="stylesheet">
+    <!-- 引入 js -->
+    <script src="https://cdn.jsdelivr.net/npm/@wangeditor/editor@latest/dist/index.min.js"></script>
     <script type="module" src="{% static 'forum/js/index.js' %}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@latest/components/prism-markup-templating.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/prismjs@latest/themes/prism.css" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@latest/components/prism-core.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@latest/prism.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@latest/plugins/autoloader/prism-autoloader.min.js"></script>
+
 </head>
 <body>
 <div class="toolbar">
@@ -44,10 +54,20 @@
         </div>
         {#     end       #}
         <div class="writeBox">
-            <div class="sendTitle" placeholder="Enter your title here" contenteditable="true"></div>
-            <div class="sendWindow" contenteditable="true"></div>
-            <div class="sendButton">
-                <button id="sendTextButton" type="button">Send</button>
+            <div class="titleBox">
+                <div class="sendTitle" placeholder="Enter your title here" contenteditable="true"></div>
+                <button id="showHideButton" class='ripple button ripple default' type="button">SHOW</button>
+            </div>
+
+{#            <div class="sendWindow" contenteditable="true"></div>#}
+
+            <div class="contentBox">
+                <div id="toolbar-container"></div>
+                <div id="editor-container"></div>
+
+                <div class="sendButton">
+                    <button id="sendTextButton" type="button">Send</button>
+                </div>
             </div>
         </div>
     </div>
