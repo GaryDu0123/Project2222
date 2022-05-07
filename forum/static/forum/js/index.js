@@ -3,11 +3,12 @@ const sendTitle = document.querySelector(".sendTitle")
 
 // editor
 var E = window.wangEditor; // 全局变量
-const { createEditor, createToolbar, i18nChangeLanguage } = window.wangEditor
+const {createEditor, createToolbar, i18nChangeLanguage} = window.wangEditor
 const editorConfig = {}
-editorConfig.placeholder = 'Please enter content'
-i18nChangeLanguage('en')
-const toolbarConfig= {
+editorConfig.placeholder = 'Please enter content';
+const LANG = location.href.indexOf('lang=en') > 0 ? 'en' : 'zh-CN';
+i18nChangeLanguage(LANG);
+const toolbarConfig = {
     excludeKeys: [
         "group-image"
     ]
@@ -21,21 +22,21 @@ editorConfig.onChange = (editor) => {
 
 // 创建编辑器
 const editor = createEditor({
-  selector: '#editor-container',
-  config: editorConfig,
-  mode: 'simple' // 或 'simple' 参考下文
+    selector: '#editor-container',
+    config: editorConfig,
+    mode: 'simple' // 或 'simple' 参考下文
 })
 // 创建工具栏
 const toolbar = createToolbar({
-  editor,
-  selector: '#toolbar-container',
-  config: toolbarConfig,
-  mode: 'simple' // 或 'simple' 参考下文
+    editor,
+    selector: '#toolbar-container',
+    config: toolbarConfig,
+    mode: 'simple' // 或 'simple' 参考下文
 })
 
 const contentBox = document.querySelector('.contentBox')
 let showHideButton = document.querySelector("#showHideButton")
-showHideButton.onclick = function (){
+showHideButton.onclick = function () {
     console.log(this.innerHTML)
     if (this.innerHTML === 'SHOW') {
         this.innerHTML = 'HIDE'
@@ -75,21 +76,21 @@ async function axiosRequest() {
 }
 
 async function seedMessage() {
-    if (editor.getHtml() === '') {
+    if (editor.getText() === '') {
         return;
     }
     let request_data = await axiosRequest()
     if (request_data['status'] === "200") {
 
-        let new_element = "<li><article>\n" +
+        let new_element = "<li><article id='" + request_data['content'].id + "'>\n" +
             "                        <div class=\"title\">" +
-                                        sendTitle.innerText +
+            sendTitle.innerText +
             "                        </div>\n" +
             "                        <div class=\"name\">" +
-                                        request_data['content'].user +
+            request_data['content'].user +
             "                        </div>" +
             "                        <div class=\"time\">" +
-                        request_data['content'].time +
+            request_data['content'].time +
             "                        </div>" +
             "                        <div class=\"blogText\">" +
             editor.getHtml() +
@@ -97,11 +98,19 @@ async function seedMessage() {
             "                    </article> </li>"
         sendTitle.innerText = ""
         // writeBox.innerText = ""
+        editor.clear()
         let blog_item_box = document.querySelector('ul.blog-item-box')
         blog_item_box.innerHTML = new_element + blog_item_box.innerHTML
 
+    } else if (request_data['status'] === "muted") {
+        swal({
+            title: "Waring",
+            text: "You have been banned from posting!",
+            icon: "warning",
+            button: "OK",
+        });
     } else {
-        console.log("Send failed")
+        swal("Send failed", '', "error")
     }
 }
 
@@ -110,5 +119,4 @@ sendMessageButton.addEventListener('click', function () {
     seedMessage().then()
 }, false)
 
-const blogText = document.querySelector('.blogText')
 

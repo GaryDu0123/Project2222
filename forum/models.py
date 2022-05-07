@@ -10,3 +10,10 @@ class Forum(models.Model):
     content = models.TextField()
     time = models.DateTimeField()
     views = models.IntegerField(default=0)
+    is_deleted = models.BooleanField(default=False)
+
+    class Meta:
+        permissions = [
+            ('admin', 'administrator of the forum'),
+            ('muted', 'User muted for sending blog')
+        ]

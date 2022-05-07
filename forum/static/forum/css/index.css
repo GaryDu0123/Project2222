@@ -269,3 +269,38 @@ body {
     font-size: 14px;
 }
 
+.article-admin {
+    display: flex;
+    display: -webkit-flex;
+    justify-content: flex-end;
+}
+
+.mute-user{
+    border-radius: 4px;
+    border: none;
+    font-size: 15px;
+    color: #fff;
+    padding: 9px 18px;
+    background-color: rgb(236, 228, 74);
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.mute-user:hover {
+    background-color: #d8d05a;
+}
+
+.delete-blog {
+    border-radius: 4px;
+    border: none;
+    font-size: 15px;
+    color: #fff;
+    padding: 9px 18px;
+    background-color: rgb(255, 67, 70);
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.delete-blog:hover {
+    background-color: #f81216;
+}

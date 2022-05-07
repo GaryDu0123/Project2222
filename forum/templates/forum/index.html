@@ -16,7 +16,7 @@
     <script src="https://cdn.jsdelivr.net/npm/prismjs@latest/components/prism-core.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/prismjs@latest/prism.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/prismjs@latest/plugins/autoloader/prism-autoloader.min.js"></script>
-
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 </head>
 <body>
 <div class="toolbar">
@@ -34,7 +34,7 @@
             <ul class="blog-item-box">
                 {% for data in contents %}
                 <li>
-                    <article>
+                    <article">
                         <div class="title">
                             {{ data.title }}
                         </div>
@@ -47,6 +47,16 @@
                         <div class="blogText">
                             {{ data.content | safe }}
                         </div>
+                        {% if "forum.admin" in perms %}
+                            <div class="article-admin" id="{{ data.id }}" >
+                                <button type="button" class="mute-user">
+                                    Mute User
+                                </button>
+                                <button type="button" class="delete-blog">
+                                    Delete Blog
+                                </button>
+                            </div>
+                        {% endif %}
                     </article>
                 </li>
                 {% endfor %}
@@ -78,5 +88,8 @@
 <script src="https://unpkg.com/axios@0.20.0/dist/axios.min.js"></script>
 <script type="module" src="{% static "chat/js/login/basic.js" %}"></script>
 <script type="module" src="{% static "forum/js/index.js" %}"></script>
+{% if "forum.admin" in perms %}
+    <script type="module" src="{% static "forum/js/admin.js" %}"></script>
+{% endif %}
 </html>
 

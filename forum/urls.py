@@ -8,5 +8,7 @@ from . import views
 urlpatterns = [
     path('index', views.index),
     path('post', views.receivePost),
+    path('muteuser', views.muteUser),
+    path('deleteblog', views.deleteBlog),
 ]
 
