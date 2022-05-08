@@ -72,9 +72,20 @@ body {
 
 #fill{
     flex-grow: 1;
+    cursor: pointer;
 }
 
 #fill>a{
+    margin-left: 30px;
+    color: white;
+    font-weight:bold;
+    text-shadow: 1px 1px 0 rgba(0, 0, 0, 0.6);
+    font-size: 20px;
+    text-decoration:none;
+}
+
+#admin-view > div {
+    background-color: rgba(255, 0, 0, 0.7);
     margin-left: 30px;
     color: white;
     font-weight:bold;
@@ -222,7 +233,9 @@ body {
     display: flex;
     display: -webkit-flex;
     /*align-items: center;*/
+    flex-direction: column;
     justify-content: center;
+    align-items: center;
     height: calc(100%);
     width: 100%;
     background-color: rgba(255, 255, 255, 0.37);
@@ -238,7 +251,7 @@ body {
 }
 /* blog context part */
 .blog-item-box {
-    height: 100%;
+    height: calc(100% - 48px);
     width: 80%;
 }
 
@@ -260,13 +273,31 @@ body {
     word-break: break-all;
 }
 .name {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
     color: #555666;
-    font-size: 14px;
+    font-size: 16px;
+    height: 28px;
+}
+.name > span {
+    margin-left: 3px;
+}
+
+.name>img {
+    width: 28px;
+    height: 28px;
 }
 
 .time {
     color: #555666;
     font-size: 14px;
+}
+hr {
+    color: rgba(0, 0, 0, 0.6);
+    height:1px;
+    border:none;
+    border-top:1px solid;
 }
 
 .article-admin {
@@ -303,4 +334,64 @@ body {
 
 .delete-blog:hover {
     background-color: #f81216;
+}
+
+div.search {
+    margin-top: 10px;
+    width: 100%;
+    height: 48px;
+}
+
+.search > form {
+    display: flex;
+    display: -webkit-flex;
+    width: 80%;
+    margin: 0 auto;
+}
+
+.search-input, .search-submit{
+    border: none;
+    outline: none;
+}
+
+.search-input {
+    width: calc(100% - 15px);
+    font-family: JetBrainsMono, "Microsoft YaHei UI", cursive;
+    height: 42px;
+    padding-left: 5px;
+    padding-right: 10px;
+}
+
+.search-label{
+    width: calc(100%);
+}
+
+.search-submit {
+    height: 48px;
+    width: 48px;
+    cursor: pointer;
+    padding: 0;
+}
+
+.bar1 input {
+    border: 2px solid #7BA7AB;
+    border-radius: 5px 0 0 5px;
+    background: #F9F0DA;
+    color: #9E9C9C;
+    font-size: 14px;
+}
+.bar1 button {
+    background: #7BA7AB;
+    border-radius: 0 5px 5px 0;
+}
+/*.bar1 button:before {*/
+    /*content: "Search";*/
+/*    font-size: 14px;*/
+/*    color: #F9F0DA;*/
+/*}*/
+
+svg {
+    height: 24px;
+    width: 24px;
+    color: #fff;
 }

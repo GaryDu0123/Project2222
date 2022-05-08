@@ -120,3 +120,39 @@ sendMessageButton.addEventListener('click', function () {
 }, false)
 
 
+function textToImage(name){
+    //设置初始值,防止name为空时程序无法执行
+    let nick = "未知";
+    //判断name是否为空
+    	if(name){
+    		nick = name.charAt(0);
+    	}
+    const fontSize = 14;
+    const fontWeight = 'normal';
+
+    let canvas = document.getElementById('canvas');
+    if(canvas){
+        canvas.remove();
+    }else{
+        const html = "<canvas id='canvas' style='display:none'></canvas>";
+        $("body").append(html);
+        canvas = document.getElementById('canvas');
+    }
+    canvas.width = 28;
+    canvas.height = 28;
+    const context = canvas.getContext('2d');
+    //头像背景颜色设置
+    context.fillStyle = 'rgba(145,234,243,0.8)';
+    context.fillRect(0, 0, canvas.width, canvas.height);
+    //头像字体颜色设置
+    context.fillStyle = '#FFFFFF';
+    context.font = fontWeight + ' ' + fontSize + 'px cursive';
+    context.textAlign = 'center';
+    context.textBaseline="middle";
+    context.fillText(nick, fontSize, fontSize);
+    return canvas.toDataURL("image/png");
+}
+const blog_item_box_img = document.querySelectorAll('ul.blog-item-box > li > article > div > img')
+for (let i = 0; i < blog_item_box_img.length; i++) {
+    blog_item_box_img[i].src = textToImage(blog_item_box_img[i].alt)
+}

@@ -70,3 +70,9 @@ for (let i = 0; i < deleteBlogButton.length; i++) {
 
     }
 }
+swal({
+    icon: "warning",
+    title: "Attention",
+    text: "You are in admin mode",
+    dangerMode: true
+});

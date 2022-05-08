@@ -2,6 +2,7 @@ from datetime import datetime
 
 from django.contrib.auth.models import Permission
 from django.contrib.contenttypes.models import ContentType
+from django.db.models import Q
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render
 from .models import Forum
@@ -12,7 +13,8 @@ from django.contrib.auth.decorators import login_required, permission_required
 
 @login_required
 def index(request):
-    return render(request, 'forum/index.html', {"contents": Forum.objects.all().order_by('-id').filter(is_deleted=False)})
+    return render(request, 'forum/index.html',
+                  {"contents": Forum.objects.all().order_by('-id').filter(is_deleted=False)})
 
 
 @login_required
@@ -65,3 +67,15 @@ def muteUser(request):
         return JsonResponse({'status': 'successful'})
     except Exception:
         return JsonResponse({'status': 'error'})
+
+
+@login_required
+def search(request):
+    content = request.GET['search-content'] if 'search-content' in request.GET else None
+    if content is None:
+        return render(request, 'forum/index.html', {
+            "contents": Forum.objects.filter(is_deleted=False).order_by('-id')
+        })
+    return render(request, 'forum/index.html', {
+        "contents": Forum.objects.filter(Q(title__contains=content) | Q(content__contains=content), is_deleted=False).order_by('-id')
+    })

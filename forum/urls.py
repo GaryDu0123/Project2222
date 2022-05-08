@@ -10,5 +10,6 @@ urlpatterns = [
     path('post', views.receivePost),
     path('muteuser', views.muteUser),
     path('deleteblog', views.deleteBlog),
+    path('search', views.search)
 ]
 
