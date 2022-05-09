@@ -5,7 +5,7 @@ from django.contrib.contenttypes.models import ContentType
 from django.db.models import Q
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render
-from .models import Forum, Repository
+from .models import Forum, Repository, Category
 from django.contrib.auth.decorators import login_required, permission_required
 
 
@@ -29,7 +29,7 @@ def receivePost(request):
             message = Forum.objects.create(user=request.user,
                                            title=request_data['title'],
                                            content=request_data['content'],
-                                           time=date
+                                           time=date,
                                            )
 
             return JsonResponse({'status': '200', "content": {
@@ -88,29 +88,59 @@ def search(request):
 @login_required
 def resource_repository(request):
     return render(request, 'forum/knowledgeRepository.html',
-                  {"contents": Repository.objects.filter(is_deleted=False).order_by('-id')})
+                  {"contents": Repository.objects.filter(is_deleted=False).order_by('-id'),
+                   'categorys': Category.objects.all()
+                   })
 
 
 @login_required
 def repositoryPost(request):
-    print(request.POST)
     try:
         # if request.user.has_perm('forum.muted'):
         #     return JsonResponse({'status': 'muted'})
         request_data = request.POST
         timestamp = int(request_data["timestamp"])
         date = datetime.fromtimestamp(timestamp / 1000)
+        category = Category.objects.get(category=request_data["category"])
         message = Repository.objects.create(user=request.user,
                                             title=request_data['title'],
                                             content=request_data['content'],
-                                            time=date
+                                            time=date,
+                                            category=category
                                             )
 
         return JsonResponse({'status': '200', "content": {
             'user': message.user.username,
             'time': message.time.strftime('%Y-%m-%d %H:%M:%S'),
-            'id': message.id
+            'id': message.id,
+            'category': message.category.category,
         }})
     except Exception:
         return JsonResponse({'status': '403'})
 
+
+@login_required
+def repository_search(request):
+    content = None
+    category = None
+    if 'search-content' in request.GET:
+        content = request.GET['search-content']
+    if 'category' in request.GET:
+        category = request.GET['category']
+    if content is None and category is None:
+        return render(request, 'forum/knowledgeRepository.html', {
+            "contents": Repository.objects.filter(is_deleted=False).order_by('-id')
+        })
+
+    if content is not None:
+        return render(request, 'forum/knowledgeRepository.html', {
+            "contents": Repository.objects.filter(Q(title__contains=content) | Q(content__contains=content),
+                                                  is_deleted=False).order_by('-id'),
+            'categorys': Category.objects.all()
+        })
+    if category is not None:
+        category_obj = Category.objects.get(category=category)
+        return render(request, 'forum/knowledgeRepository.html', {
+            "contents": Repository.objects.filter(category=category_obj,                                   is_deleted=False).order_by('-id'),
+            'categorys': Category.objects.all()
+        })

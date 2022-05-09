@@ -6,7 +6,9 @@
     <title>Forum</title>
     <link rel="stylesheet" href="{% static "forum/css/index.css" %}">
     <link rel="stylesheet" href="{% static "forum/css/ripple.css" %}">
+{#    <link rel="stylesheet" href="{% static "forum/css/selectBox.css" %}">#}
     <link rel="stylesheet" href={% static "icon/font_3291112_6wb3t6ppuia/iconfont.css" %}>
+{#    <link rel="stylesheet" type="text/css" href="https://www.jq22.com/jquery/font-awesome.4.6.0.css">#}
     <link href="https://cdn.jsdelivr.net/npm/@wangeditor/editor@latest/dist/css/style.css" rel="stylesheet">
     <!-- 引入 js -->
     <script src="https://cdn.jsdelivr.net/npm/@wangeditor/editor@latest/dist/index.min.js"></script>
@@ -37,7 +39,7 @@
     <div class="chatBar">
         <div class="blogBox">
             <div class="search bar1">
-                <form action="search" method="get">
+                <form action="repository/search" method="get">
                     {% csrf_token %}
                     <label class="search-label">
                         <input name="search-content" type="text" class="search-input" placeholder="Please enter what you want to search...">
@@ -46,6 +48,11 @@
                         <svg focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"></path></svg>
                     </button>
                 </form>
+            </div>
+            <div class="category">
+                {% for category in categorys %}
+                    <div class="ripple button ripple default">{{ category.category }}</div>
+                {% endfor %}
             </div>
             {#     start       #}
             <ul class="blog-item-box">
@@ -59,10 +66,12 @@
                         <div class="name">
                             <img src="" alt="{{ data.user }}" >
                             <span>{{ data.user }}</span>
+                            <div class="forum-category">{{ data.category.category }}</div>
                         </div>
                         <div class="time">
                             {{ data.time | date:"Y-m-d H:i:s" }}
                         </div>
+
                         <hr>
                         <div class="blogText">
                             {{ data.content | safe }}
@@ -86,6 +95,25 @@
         <div class="writeBox">
             <div class="titleBox">
                 <div class="sendTitle" placeholder="Enter your title here" contenteditable="true"></div>
+{#                    <div class="selectBox">#}
+{#                            <div class="inputCase">#}
+{#                                <input class="imitationSelect" type="text" value="橘子" readonly/>#}
+{#                                <i class="fa fa-caret-down"></i>#}
+{#                            </div>#}
+{#                            <ul class="selectUl">#}
+{#                                <li data-val="橘子" data-id="1"  class="actived_li">橘子</li>#}
+{#                                <li data-val="苹果" data-id="2">苹果</li>#}
+{#                                <li data-val="桃子" data-id="3">桃子</li>#}
+{##}
+{#                            </ul>#}
+{#                    </div>#}
+                <label class="selectBoxLabel">
+                    <select class="selectBox">
+                        {% for category in categorys %}
+                            <option>{{ category.category }}</option>
+                        {% endfor %}
+                    </select>
+                </label>
                 <button id="showHideButton" class='ripple button ripple default' type="button">SHOW</button>
             </div>
 
@@ -108,6 +136,7 @@
 <script src="https://unpkg.com/axios@0.20.0/dist/axios.min.js"></script>
 <script type="module" src="{% static "chat/js/login/basic.js" %}"></script>
 <script type="module" src="{% static "forum/js/knowledgeRepository.js" %}"></script>
+{#<script type="module" src="{% static "forum/js/selectBox.js" %}"></script>#}
 {% if "forum.admin" in perms %}
     <script type="module" src="{% static "forum/js/admin.js" %}"></script>
 {% endif %}

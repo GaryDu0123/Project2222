@@ -88,6 +88,8 @@ axios.interceptors.request.use((config) => {
 // send message
 async function axiosRequest() {
     let param = new URLSearchParams()
+    let category = document.querySelector('.selectBox').value
+    param.append('category', category)
     param.append("title", sendTitle.innerText);
     param.append("content", editor.getHtml()); // convert object to json string
     param.append('timestamp', new Date().getTime().toString()); // get current timestamp
@@ -104,21 +106,28 @@ async function axiosRequest() {
 
 async function seedMessage() {
     if (sendTitle.innerText === '') {
+        swal({
+            title: "Title cannot be empty!",
+            text: "",
+            icon: "info",
+            button: "OK",
+        });
         return;
     }
     let request_data = await axiosRequest()
     if (request_data['status'] === "200") {
-
         let new_element = "<li><article id='" + request_data['content'].id + "'>\n" +
             "                        <div class=\"title\">" +
             sendTitle.innerText +
-            "                        </div>\n" +
-            "                        <div class=\"name\">" +
-            request_data['content'].user +
-            "                        </div>" +
+            "                        </div>\n<hr>" +
+            "                        <span class=\"name\">" +
+            `<img src="${textToImage(request_data['content'].user)}" alt="${request_data['content'].user}" >`+
+            `<span>${request_data['content'].user}</span>`+
+            "<div class='forum-category'>"+ request_data['content'].category +"</div>" +
+            "                        </span>" +
             "                        <div class=\"time\">" +
             request_data['content'].time +
-            "                        </div>" +
+            "                        </div><hr>" +
             "                        <div class=\"blogText\">" +
             editor.getHtml() +
             "                        </div>" +
@@ -149,7 +158,7 @@ sendMessageButton.addEventListener('click', function () {
 
 function textToImage(name) {
     //设置初始值,防止name为空时程序无法执行
-    let nick = "未知";
+    let nick = "Unknown";
     //判断name是否为空
     if (name) {
         nick = name.charAt(0);
@@ -203,3 +212,11 @@ function replace(){
 
 }
 replace()
+
+
+let category = document.querySelector('.category')
+for (let i = 0; i < category.length; i++) {
+    category[i].onclick = function(){
+        location.href = 'repository/search?category=' + category[i].innerText;
+    }
+}

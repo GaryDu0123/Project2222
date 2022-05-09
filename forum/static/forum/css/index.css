@@ -234,7 +234,7 @@ body {
     display: -webkit-flex;
     /*align-items: center;*/
     flex-direction: column;
-    justify-content: center;
+    /*justify-content: center;*/
     align-items: center;
     height: calc(100%);
     width: 100%;
@@ -282,6 +282,12 @@ body {
 }
 .name > span {
     margin-left: 3px;
+    flex-grow: 1;
+}
+
+.forum-category {
+    font-family: JetBrainsMono, "Microsoft YaHei UI", cursive;
+    font-size: 16px;
 }
 
 .name>img {
@@ -394,4 +400,39 @@ svg {
     height: 24px;
     width: 24px;
     color: #fff;
+}
+
+.selectBox{
+    height: 34px;
+    border: none;
+    outline: none;
+    background-color: #EEEEEE;
+    color: rgba(0, 0, 0, 0.87);
+    font-family: JetBrainsMono, "Microsoft YaHei UI", cursive;
+}
+
+.selectBoxLabel{
+    display: flex;
+    align-items: center;
+    font-family: JetBrainsMono, "Microsoft YaHei UI", cursive;
+}
+
+.category{
+    width: 80%;
+    display: flex;
+    flex-wrap: wrap;
+    align-content: center;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+}
+
+.category div {
+    /*width: 30px;*/
+    line-height: 30px;
+    height: 30px;
+    margin: 10px;
+    padding: 5px 15px;
+    background: rgba(255, 255, 255, 0.8);
+    font-family: JetBrainsMono, "Microsoft YaHei UI", cursive;
 }

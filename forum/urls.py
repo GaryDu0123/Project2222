@@ -13,5 +13,6 @@ urlpatterns = [
     path('deleteblog', views.deleteBlog),
     path('search', views.search),
     path('repository/post', views.repositoryPost),
+    path('repository/search', views.repository_search)
 ]
 
