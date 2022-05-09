@@ -75,7 +75,7 @@ body {
     cursor: pointer;
 }
 
-#fill>a{
+.tool-bar-style>a{
     margin-left: 30px;
     color: white;
     font-weight:bold;
