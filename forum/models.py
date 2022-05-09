@@ -17,3 +17,13 @@ class Forum(models.Model):
             ('admin', 'administrator of the forum'),
             ('muted', 'User muted for sending blog')
         ]
+
+
+class Repository(models.Model):
+    id = models.AutoField(primary_key=True)
+    user = models.ForeignKey(to=User, on_delete=models.CASCADE)
+    title = models.TextField()
+    content = models.TextField()
+    time = models.DateTimeField()
+    views = models.IntegerField(default=0)
+    is_deleted = models.BooleanField(default=False)

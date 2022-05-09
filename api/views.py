@@ -1,9 +1,13 @@
+import os
+import time
 from datetime import datetime
 
 from django.contrib.auth.models import User
 from django.db.models import Q
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render
+
+from Project2222.settings import BASE_DIR
 from encryption.models import KeyManager
 from django.contrib.auth.decorators import login_required
 from chat.models import FriendRelationship, MessageRecord
@@ -131,3 +135,27 @@ def polling_update_message(request):
     except Exception as e:
         print(e)
         return HttpResponse(status=403)
+
+
+def upload_file(request):
+    if request.method == 'POST':
+        if 'custom-fileName' not in request.FILES:
+            pass  # error
+        f = request.FILES.get('custom-fileName')
+        directory = os.path.join(os.path.join(BASE_DIR, 'api', 'static'), 'api', 'repository')
+        file_name = f'{request.user.username}-{time.time()}-{f.name}'
+        with open(f'{directory}/{file_name}', 'wb+') as destination:
+            for chunk in f.chunks():
+                destination.write(chunk)
+        return JsonResponse({
+            "errno": 0,
+            "data": {
+                "url": f'/static/api/repository/{file_name}'
+            }
+        })
+    return JsonResponse({
+        {
+            "errno": 1,
+            "message": "error"
+        }
+    })

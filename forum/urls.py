@@ -7,9 +7,11 @@ from . import views
 
 urlpatterns = [
     path('index', views.index),
+    path('repository', views.resource_repository),
     path('post', views.receivePost),
     path('muteuser', views.muteUser),
     path('deleteblog', views.deleteBlog),
-    path('search', views.search)
+    path('search', views.search),
+    path('repository/post', views.repositoryPost),
 ]
 

@@ -5,7 +5,7 @@ from django.contrib.contenttypes.models import ContentType
 from django.db.models import Q
 from django.http import HttpResponse, JsonResponse
 from django.shortcuts import render
-from .models import Forum
+from .models import Forum, Repository
 from django.contrib.auth.decorators import login_required, permission_required
 
 
@@ -19,24 +19,27 @@ def index(request):
 
 @login_required
 def receivePost(request):
-    try:
-        if request.user.has_perm('forum.muted'):
-            return JsonResponse({'status': 'muted'})
-        request_data = request.POST
-        timestamp = int(request_data["timestamp"])
-        date = datetime.fromtimestamp(timestamp / 1000)
-        message = Forum.objects.create(user=request.user,
-                                       title=request_data['title'],
-                                       content=request_data['content'],
-                                       time=date
-                                       )
+    if request.method == 'POST':
+        try:
+            if request.user.has_perm('forum.muted'):
+                return JsonResponse({'status': 'muted'})
+            request_data = request.POST
+            timestamp = int(request_data["timestamp"])
+            date = datetime.fromtimestamp(timestamp / 1000)
+            message = Forum.objects.create(user=request.user,
+                                           title=request_data['title'],
+                                           content=request_data['content'],
+                                           time=date
+                                           )
 
-        return JsonResponse({'status': '200', "content": {
-            'user': message.user.username,
-            'time': message.time.strftime('%Y-%m-%d %H:%M:%S'),
-            'id': message.id
-        }})
-    except Exception:
+            return JsonResponse({'status': '200', "content": {
+                'user': message.user.username,
+                'time': message.time.strftime('%Y-%m-%d %H:%M:%S'),
+                'id': message.id
+            }})
+        except Exception:
+            return JsonResponse({'status': '403'})
+    else:
         return JsonResponse({'status': '403'})
 
 
@@ -77,5 +80,37 @@ def search(request):
             "contents": Forum.objects.filter(is_deleted=False).order_by('-id')
         })
     return render(request, 'forum/index.html', {
-        "contents": Forum.objects.filter(Q(title__contains=content) | Q(content__contains=content), is_deleted=False).order_by('-id')
+        "contents": Forum.objects.filter(Q(title__contains=content) | Q(content__contains=content),
+                                         is_deleted=False).order_by('-id')
     })
+
+
+@login_required
+def resource_repository(request):
+    return render(request, 'forum/knowledgeRepository.html',
+                  {"contents": Repository.objects.filter(is_deleted=False).order_by('-id')})
+
+
+@login_required
+def repositoryPost(request):
+    print(request.POST)
+    try:
+        # if request.user.has_perm('forum.muted'):
+        #     return JsonResponse({'status': 'muted'})
+        request_data = request.POST
+        timestamp = int(request_data["timestamp"])
+        date = datetime.fromtimestamp(timestamp / 1000)
+        message = Repository.objects.create(user=request.user,
+                                            title=request_data['title'],
+                                            content=request_data['content'],
+                                            time=date
+                                            )
+
+        return JsonResponse({'status': '200', "content": {
+            'user': message.user.username,
+            'time': message.time.strftime('%Y-%m-%d %H:%M:%S'),
+            'id': message.id
+        }})
+    except Exception:
+        return JsonResponse({'status': '403'})
+

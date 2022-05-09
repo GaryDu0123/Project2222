@@ -10,6 +10,7 @@
     <link href="https://cdn.jsdelivr.net/npm/@wangeditor/editor@latest/dist/css/style.css" rel="stylesheet">
     <!-- 引入 js -->
     <script src="https://cdn.jsdelivr.net/npm/@wangeditor/editor@latest/dist/index.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@wangeditor/plugin-upload-attachment@latest/dist/index.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/prismjs@latest/components/prism-markup-templating.js"></script>
     <link href="https://cdn.jsdelivr.net/npm/prismjs@latest/themes/prism.css" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/prismjs@latest/components/prism-core.min.js"></script>
@@ -106,7 +107,7 @@
 </body>
 <script src="https://unpkg.com/axios@0.20.0/dist/axios.min.js"></script>
 <script type="module" src="{% static "chat/js/login/basic.js" %}"></script>
-<script type="module" src="{% static "forum/js/index.js" %}"></script>
+<script type="module" src="{% static "forum/js/knowledgeRepository.js" %}"></script>
 {% if "forum.admin" in perms %}
     <script type="module" src="{% static "forum/js/admin.js" %}"></script>
 {% endif %}
