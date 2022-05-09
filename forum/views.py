@@ -96,8 +96,8 @@ def resource_repository(request):
 @login_required
 def repositoryPost(request):
     try:
-        # if request.user.has_perm('forum.muted'):
-        #     return JsonResponse({'status': 'muted'})
+        if request.user.has_perm('forum.muted'):
+            return JsonResponse({'status': 'muted'})
         request_data = request.POST
         timestamp = int(request_data["timestamp"])
         date = datetime.fromtimestamp(timestamp / 1000)
@@ -141,6 +141,36 @@ def repository_search(request):
     if category is not None:
         category_obj = Category.objects.get(category=category)
         return render(request, 'forum/knowledgeRepository.html', {
-            "contents": Repository.objects.filter(category=category_obj,                                   is_deleted=False).order_by('-id'),
+            "contents": Repository.objects.filter(category=category_obj, is_deleted=False).order_by('-id'),
             'categorys': Category.objects.all()
         })
+
+
+@permission_required('forum.admin', raise_exception=True)
+@login_required
+def repository_deleteblog(request):
+    try:
+        repository_blog = Repository.objects.get(id=int(request.POST['id']))
+        repository_blog.is_deleted = True
+        repository_blog.save()
+        return JsonResponse({'status': 'successful'})
+    except Exception:
+        return JsonResponse({'status': 'error'})
+
+
+@permission_required('forum.admin', raise_exception=True)
+@login_required
+def repository_muteuser(request):
+    try:
+        user = Repository.objects.get(id=int(request.POST['id'])).user
+        content_type = ContentType.objects.get_for_model(Forum)
+        permission = Permission.objects.get(
+            codename='muted',
+            content_type=content_type,
+        )
+        user.user_permissions.add(permission)
+        user.save()
+        return JsonResponse({'status': 'successful'})
+    except Exception:
+        return JsonResponse({'status': 'error'})
+
