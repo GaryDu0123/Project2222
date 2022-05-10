@@ -129,7 +129,8 @@ def repository_search(request):
         category = request.GET['category']
     if content is None and category is None:
         return render(request, 'forum/knowledgeRepository.html', {
-            "contents": Repository.objects.filter(is_deleted=False).order_by('-id')
+            "contents": Repository.objects.filter(is_deleted=False).order_by('-id'),
+            'categorys': Category.objects.all()
         })
 
     if content is not None:

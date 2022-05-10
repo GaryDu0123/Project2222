@@ -214,7 +214,7 @@ function replace(){
 replace()
 
 
-let category = document.querySelector('.category')
+let category = document.querySelector('.category').childNodes
 for (let i = 0; i < category.length; i++) {
     category[i].onclick = function(){
         location.href = 'repository/search?category=' + category[i].innerText;
