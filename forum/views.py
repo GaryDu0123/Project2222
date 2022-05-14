@@ -13,8 +13,14 @@ from django.contrib.auth.decorators import login_required, permission_required
 
 @login_required
 def index(request):
+    if request.user.has_perm('forum.admin'):
+        return render(request, 'forum/index.html',
+                      {"contents": Forum.objects.all().order_by('-id').filter(is_deleted=False)})
     return render(request, 'forum/index.html',
-                  {"contents": Forum.objects.all().order_by('-id').filter(is_deleted=False)})
+                  {"contents": Forum.objects.all().order_by('-id').filter(
+                      Q(is_deleted=False, user=request.user) | Q(is_deleted=False, is_private=False)
+                  )
+              })
 
 
 @login_required
@@ -24,12 +30,15 @@ def receivePost(request):
             if request.user.has_perm('forum.muted'):
                 return JsonResponse({'status': 'muted'})
             request_data = request.POST
+
             timestamp = int(request_data["timestamp"])
             date = datetime.fromtimestamp(timestamp / 1000)
             message = Forum.objects.create(user=request.user,
                                            title=request_data['title'],
                                            content=request_data['content'],
                                            time=date,
+                                           is_private=True if request_data['category'] == 'Private' else False,
+                                           is_anonymous=True if request_data['category'] == 'Anonymous' else False
                                            )
 
             return JsonResponse({'status': '200', "content": {

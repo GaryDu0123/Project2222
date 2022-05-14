@@ -57,8 +57,22 @@
                         </div>
                         <hr>
                         <div class="name">
+                        {% if data.is_anonymous %}
+                            <img src="" alt="Anonymous" >
+                        {% else %}
                             <img src="" alt="{{ data.user }}" >
-                            <span>{{ data.user }}</span>
+                        {% endif %}
+                            <span>
+                                {% if data.is_anonymous %}
+                                    Anonymous
+                                {% else %}
+                                    {{ data.user }}
+                                    {% if data.is_private %}
+                                        (Private)
+                                    {% endif %}
+                                {% endif %}
+
+                            </span>
                         </div>
                         <div class="time">
                             {{ data.time | date:"Y-m-d H:i:s" }}
@@ -86,15 +100,22 @@
         <div class="writeBox">
             <div class="titleBox">
                 <div class="sendTitle" placeholder="Enter your title here" contenteditable="true"></div>
+                <label class="selectBoxLabel">
+                    <select class="selectBox">
+                            <option>Public</option>
+                            <option>Private</option>
+                            <option>Anonymous</option>
+                    </select>
+                </label>
                 <button id="showHideButton" class='ripple button ripple default' type="button">SHOW</button>
             </div>
+
 
 {#            <div class="sendWindow" contenteditable="true"></div>#}
 
             <div class="contentBox">
                 <div id="toolbar-container"></div>
                 <div id="editor-container"></div>
-
                 <div class="sendButton">
                     <button id="sendTextButton" type="button">Send</button>
                 </div>

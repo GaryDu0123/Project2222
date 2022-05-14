@@ -61,6 +61,8 @@ axios.interceptors.request.use((config) => {
 
 async function axiosRequest() {
     let param = new URLSearchParams()
+    let type = document.querySelector('.selectBox').value
+    param.append('category', type)
     param.append("title", sendTitle.innerText);
     param.append("content", editor.getHtml()); // convert object to json string
     param.append('timestamp', new Date().getTime().toString()); // get current timestamp

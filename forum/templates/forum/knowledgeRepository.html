@@ -45,7 +45,7 @@
                     <label class="search-label">
                         <input name="search-content" type="text" class="search-input" placeholder="Please enter what you want to search...">
                     </label>
-                    <button class="search-submit" type="submit">
+                    <button class="search-submit" type="submit" name="search">
                         <svg focusable="false" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M15.5 14h-.79l-.28-.27A6.471 6.471 0 0 0 16 9.5 6.5 6.5 0 1 0 9.5 16c1.61 0 3.09-.59 4.23-1.57l.27.28v.79l5 4.99L20.49 19l-4.99-5zm-6 0C7.01 14 5 11.99 5 9.5S7.01 5 9.5 5 14 7.01 14 9.5 11.99 14 9.5 14z"></path></svg>
                     </button>
                 </form>
@@ -96,18 +96,6 @@
         <div class="writeBox">
             <div class="titleBox">
                 <div class="sendTitle" placeholder="Enter your title here" contenteditable="true"></div>
-{#                    <div class="selectBox">#}
-{#                            <div class="inputCase">#}
-{#                                <input class="imitationSelect" type="text" value="橘子" readonly/>#}
-{#                                <i class="fa fa-caret-down"></i>#}
-{#                            </div>#}
-{#                            <ul class="selectUl">#}
-{#                                <li data-val="橘子" data-id="1"  class="actived_li">橘子</li>#}
-{#                                <li data-val="苹果" data-id="2">苹果</li>#}
-{#                                <li data-val="桃子" data-id="3">桃子</li>#}
-{##}
-{#                            </ul>#}
-{#                    </div>#}
                 <label class="selectBoxLabel">
                     <select class="selectBox">
                         {% for category in categorys %}

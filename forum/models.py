@@ -15,6 +15,8 @@ class Forum(models.Model):
     time = models.DateTimeField()
     views = models.IntegerField(default=0)
     is_deleted = models.BooleanField(default=False)
+    is_private = models.BooleanField(default=False)
+    is_anonymous = models.BooleanField(default=False)
 
     class Meta:
         permissions = [
